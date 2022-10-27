@@ -9,7 +9,7 @@ import SphrSeqFFTVisPKG.clef.enums.keySigVals;
 import SphrSeqFFTVisPKG.instrument.myInstrument;
 import SphrSeqFFTVisPKG.measure.myMeasure;
 import SphrSeqFFTVisPKG.note.myNote;
-import SphrSeqFFTVisPKG.note.enums.durType;
+import SphrSeqFFTVisPKG.note.enums.noteDurType;
 import SphrSeqFFTVisPKG.note.enums.noteValType;
 import SphrSeqFFTVisPKG.score.myScore;
 import SphrSeqFFTVisPKG.ui.myPianoObj;
@@ -74,7 +74,7 @@ public class myStaff {
 		name =_nm;
 		initAllStructs();
 		//win.getMsgObj().dispInfoMessage("myStaff","ctor","call ctor in mystaff id : " + ID);		
-		putValsInTreemaps(0, 0, new myTimeSig(p, 4,4, durType.getDurTypeForNote(4)),  new myKeySig(p,keySigVals.CMaj), instrument.clef, true, null); 		//initialize time sig and key sig
+		putValsInTreemaps(0, 0, new myTimeSig(p, 4,4, noteDurType.getDurTypeForNote(4)),  new myKeySig(p,keySigVals.CMaj), instrument.clef, true, null); 		//initialize time sig and key sig
 		initStaffFlags();
 		//initial measure of staff
 		stfFlags[enabledIDX]=true;		//every staff is initially enabled

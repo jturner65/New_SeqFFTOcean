@@ -63,10 +63,10 @@ public abstract class myClefBase{
 	
 	protected void initClef() {
 		lowNote = new NoteData(midNote);
-		int[] dispAmts = win.getNoteDisp(lowNote, -7);
+		int[] dispAmts = lowNote.getNoteDisp(-7);
 		lowNote.editNoteVal(noteValType.getVal(dispAmts[0]), dispAmts[1]);
 		highNote = new NoteData(midNote);
-		dispAmts = win.getNoteDisp(highNote, 7);
+		dispAmts = highNote.getNoteDisp(7);
 		highNote.editNoteVal(noteValType.getVal(dispAmts[0]), dispAmts[1]);
 		c4LocMultForClef = clefType.getC4LocMultClef(clefName);
 	}

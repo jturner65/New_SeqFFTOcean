@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import SphrSeqFFTVisPKG.clef.base.myClefBase;
 import SphrSeqFFTVisPKG.measure.myMeasure;
-import SphrSeqFFTVisPKG.note.enums.durType;
+import SphrSeqFFTVisPKG.note.enums.noteDurType;
 import SphrSeqFFTVisPKG.note.enums.noteValType;
 import SphrSeqFFTVisPKG.staff.myKeySig;
 import SphrSeqFFTVisPKG.staff.myStaff;
@@ -13,6 +13,7 @@ import SphrSeqFFTVisPKG.ui.controls.mySphereCntl;
 import base_JavaProjTools_IRender.base_Render_Interface.IRenderInterface;
 import base_Math_Objects.MyMathUtils;
 import base_Math_Objects.vectorObjs.doubles.myVector;
+import base_UI_Objects.my_procApplet;
 
 /**
  * fundamental class to hold and process a single note played by a single instrument
@@ -20,7 +21,6 @@ import base_Math_Objects.vectorObjs.doubles.myVector;
  *
  */
 public class myNote {
-	public myMusicSimWindow win;
 	public static int nCnt = 0;
 	public int ID;		
 	public float noteC4DispLoc;		//displacement for this note from C4 for display purposes, governed by owning staff
@@ -49,6 +49,16 @@ public class myNote {
 	
 	public float[] gridDims;
 	
+	//pxl displacements to draw rests
+	public final float[][] restDisp = new float[][] {
+		new float[]{0,-20},
+		new float[]{0,-12},
+		new float[]{0,-12},
+		new float[]{0,-22},
+	};
+	
+	//display note width multiplier
+	public final static float ntWdthMult = 2.5f;
 	//sphere UI values
 	public mySphereCntl sphrOwn;
 	public float[] sphereDims;
@@ -57,13 +67,12 @@ public class myNote {
 	public int sphereRing;	
 	
 	//build note then set duration
-	public myNote(myMusicSimWindow _win, noteValType _name, int _octave, myMeasure _measure, myStaff _owningStaff) {
-		win=_win;
+	public myNote(noteValType _name, int _octave, myMeasure _measure, myStaff _owningStaff) {
 		ID = nCnt++;	
 		meas = _measure;
 		owningStaff = _owningStaff;
 		sphrOwn = null;
-		noteWidth = owningStaff.getlOff() * win.ntWdthMult;		//modify based on duration ? TODO
+		noteWidth = owningStaff.getlOff() * ntWdthMult;		//modify based on duration ? TODO
 		n = new NoteData(_name, _octave);
 		tupleVal = -1;
 		gridDims = new float[]{0,0,0,0};
@@ -80,8 +89,7 @@ public class myNote {
 		flags[isInStaff] = (owningStaff.getClefsAtTime(n.stTime).isOnStaff(n) == 0);
 	}	
 	//ctor for note data for notes in spherical UI
-	public myNote(myMusicSimWindow _win, float _alphaSt, float _alphaEnd, int _ring, mySphereCntl _sphrOwn){
-		win=_win;
+	public myNote(float _alphaSt, float _alphaEnd, int _ring, mySphereCntl _sphrOwn){
 		ID = nCnt++;	
 		meas = null;	
 		sphrOwn = _sphrOwn;
@@ -92,12 +100,11 @@ public class myNote {
 	}
 	
 	public myNote(myNote _note){
-		win=_note.win;
 		ID = nCnt++;	
 		meas = _note.meas;
 		owningStaff = _note.owningStaff;
 		sphrOwn = _note.sphrOwn;
-		noteWidth = owningStaff.getlOff() * win.ntWdthMult;		
+		noteWidth = owningStaff.getlOff() * ntWdthMult;		
 		n = new NoteData(_note.n);
 		tupleVal = _note.tupleVal;
 		gridDims = new float[]{0,0,0,0};
@@ -226,17 +233,17 @@ public class myNote {
 		n.octave = 0;
 	}	
 	
-	public void setVals(int _stTime, durType _typ, boolean _isDot, boolean _isTup, int _tplVal){setStart(_stTime);setDuration( _typ.getVal(),_isDot, _isTup, _tplVal);}
+	public void setVals(int _stTime, noteDurType _typ, boolean _isDot, boolean _isTup, int _tplVal){setStart(_stTime);setDuration( _typ.getVal(),_isDot, _isTup, _tplVal);}
 	public void setVals(int _stTime, int _dur, boolean _isDot, boolean _isTup, int _tplVal){setStart(_stTime);setDuration( _dur,_isDot, _isTup, _tplVal);}	
 	//dotted noted means note duration is x 1.5; tuple is x in the space of 2 notes, so duration is 2/x where x is the tuple val (>=3)
-	public void setDuration(durType _typ, boolean _isDot, boolean _isTup, int _tplVal){	setDuration( _typ.getVal(),_isDot, _isTup, _tplVal);	}	
+	public void setDuration(noteDurType _typ, boolean _isDot, boolean _isTup, int _tplVal){	setDuration( _typ.getVal(),_isDot, _isTup, _tplVal);	}	
 	public void setDuration(int _dur, boolean _isDot, boolean _isTup, int _tplVal){
 		if(_isDot){_dur = (int)(_dur * 1.5f); flags[isDotted] = true;} 
 		else if(_isTup){ if(tupleVal < 3){return;} tupleVal = _tplVal; _dur =(int)(_dur * 2.0/(tupleVal)); flags[isTuple] = true;} 
 		n.setDur(_dur);
 	}
 	
-	public void setDurationPRL(durType _typ, int defaultVal, boolean _isDot, boolean _isTup, int _tplVal){	setDuration( _typ.getVal(),_isDot, _isTup, _tplVal);	}
+	public void setDurationPRL(noteDurType _typ, int defaultVal, boolean _isDot, boolean _isTup, int _tplVal){	setDuration( _typ.getVal(),_isDot, _isTup, _tplVal);	}
 	
 	public void setDurationPRL(float _scrDur, int defaultVal,  boolean _isDot, boolean _isTup, int _tplVal){
 		if(_isDot){_scrDur = _scrDur * 1.5f; flags[isDotted] = true;} 
@@ -288,6 +295,86 @@ public class myNote {
 		p.popMatState();
 	}
 	
+	
+	//note is tilted ellipse with stem (if  not whole note), and filled (if not whole or half note) and with flags (if 8th or smaller)
+	//type  == type of note (0 is whole, 1 is half, 2 is qtr, 3 is eighth, etc)
+	//nextNoteLoc is location of next note yikes.
+	//flags : 0 : isDotted, 1 : isTuple, 2 : isRest, 3 : isChord, 4 : drawStemUp,   5 : isConnected, 6 :showDisplacement msg (8va, etc), 7 : isInStaff, 8 : isFlipped(part of chord and close to prev note, put note on other side of stem),
+	//grpPos : 0 first in group of stem-tied notes, 1 : last in group of stemTied notes, otherwise neither 
+	protected void drawNote(IRenderInterface p, float noteW, myVector nextNoteLoc, int noteTypIdx, int grpPos, boolean[] flags, float numLedgerLines){
+		p.pushMatState(); 
+		//draw body
+		//noteIdx : -2,-1, 0, 1, 2, 3
+		p.rotate(MyMathUtils.FIFTH_PI_F,0,0,1);
+		p.setStrokeWt(1);
+		p.setColorValFill(IRenderInterface.gui_Black, 255);
+		p.setColorValStroke(IRenderInterface.gui_Black, 255);
+		if(flags[myNote.isChord] && flags[myNote.isFlipped]){p.translate(-noteW,0,0);}		//only flip if close to note
+		//line(-noteW,0,0,noteW,0,0);//ledger lines, to help align the note
+		if(noteTypIdx <= -1){	p.setStrokeWt(2);	p.noFill();	}
+		p.drawEllipse2D(0,0,noteW, .75f*noteW);
+		p.rotate(-MyMathUtils.QUARTER_PI_F,0,0,1);
+		if(flags[myNote.isDotted]){p.drawEllipse2D(1.5f*noteW,0,3,3);	}//is dotted
+		if(noteTypIdx > -2){//has stem and is not last in stemmed group
+			if(flags[myNote.drawStemUp]){	p.translate(-.5*noteW,0,0); p.drawLine(0,0,0,0,-4*noteW,0);}//draw up
+			else {							p.translate(.5*noteW,0,0);p.drawLine(0,0,0,0,4*noteW,0);}//drawDown
+			if((noteTypIdx > 0) && (1 != grpPos)){//has flag and is not last in group so draw flag
+				float flagW, flagH1;
+				if(flags[myNote.drawCnncted]){	//is tied,  TODO
+					flagW = (float)nextNoteLoc.x;
+					flagH1 = (float)nextNoteLoc.y;
+				} else{
+					flagW = 2 * noteW;
+					flagH1 = noteW;
+				}
+				float moveDir;//direction multiplier
+				if(flags[myNote.drawStemUp]){	 moveDir = noteW; p.translate(0,-4*noteW,0);}//draw up
+				else {			 moveDir = -noteW;p.translate(0,4*noteW,0);}//drawDown
+				float yVal = 0,flagH2 = - .5f*moveDir;;
+				for(int i =0; i<noteTypIdx;++i){ // noteIdx is # of flags to draw too
+					quad(0,yVal,flagW,yVal+flagH1,flagW,yVal+flagH1+flagH2,0,yVal + flagH2);
+					yVal += moveDir;
+				}
+			}			
+		}
+		if(numLedgerLines != 0.0f){ //draw ledger lines outside staff, either above or below (if negative # then below note, above staff)
+			p.translate(-noteW*.5f,0);
+			int mult;
+			if(numLedgerLines < 0 ){mult=1;} else {mult=-1;}
+			if(flags[myNote.isOnLdgrLine]){//put ledger line through middle of note
+				p.drawLine(-noteW,0,0,noteW,0,0);					
+			} else {
+				p.drawLine(-noteW,.5f*noteW,0,noteW,.5f*noteW,0);			
+			}
+			p.pushMatState(); 
+			if(Math.abs(numLedgerLines) - (int)(Math.abs(numLedgerLines)) != 0){p.translate(0,.5f*noteW);}
+			for(int i =0;i<Math.abs(numLedgerLines);++i){
+				p.translate(0,mult*noteW);
+				p.drawLine(-noteW,0,0,noteW,0,0);
+			}
+			p.popMatState();
+			
+		}
+		p.popMatState();
+	}//draw a note head
+	
+	//flags : 0 : isDotted, 1 : drawUp, 2 : isFlipped(part of chord)
+	//durType vals : Whole(256),Half(128),Quarter(64),Eighth(32),Sixteenth(16),Thirtisecond(8); 
+	protected void drawRest(IRenderInterface p, float restW, int restIdx, boolean isDotted){
+		p.pushMatState(); 
+		//draw rest
+		//restIdx : -2,-1, 0, 1, 2, 3
+		if(restIdx > -1){//draw image
+			p.translate(restDisp[restIdx][0], restDisp[restIdx][1],0);		//center image of rest - move up 2 ledger lines
+			p.scale(1,1.2f,1);
+			((my_procApplet) p).image(win.restImgs[restIdx], 0,0);				
+		} else {//draw box
+			if(restIdx == -2){	p.translate(0,-.5f * restW,0);}//whole rest is above half rest
+			p.drawRect(-.5f * restW, 0, restW,.5f * restW);				
+		}
+		p.popMatState();
+	}		
+	
 	//draw this note
 	public void drawMe(IRenderInterface p){		drawMePriv(p);	}
 	protected void drawMePriv(IRenderInterface p){
@@ -295,7 +382,7 @@ public class myNote {
 		if(flags[isRest]){ 
 			//translate to middle of measure
 			p.translate(0, owningStaff.getlOff() * 2.5f);
-			win.drawRest(owningStaff.getlOff(), n.typIdx, flags[isDotted]);			
+			drawRest(p, owningStaff.getlOff(), n.typIdx, flags[isDotted]);			
 		} else {	
 			p.showText(dispMsg,0,0);//8va etc
 			//where this note should live on the staff (assume measure has translated to appropriate x position), from C4
@@ -307,7 +394,7 @@ public class myNote {
 				p.showText("#",-1.5f*owningStaff.getlOff(),.5f*owningStaff.getlOff());
 				p.popMatState();
 			}
-			win.drawNote(owningStaff.getlOff(), new myVector(0,0,0), n.typIdx,0 ,flags, (dispYVal <0 ? dispYVal : (dispYVal - staffSize > 0) ? dispYVal - staffSize : 0)/10.0f  );//TODO
+			drawNote(p, owningStaff.getlOff(), new myVector(0,0,0), n.typIdx,0 ,flags, (dispYVal <0 ? dispYVal : (dispYVal - staffSize > 0) ? dispYVal - staffSize : 0)/10.0f  );//TODO
 		}
 		p.popMatState();
 	}

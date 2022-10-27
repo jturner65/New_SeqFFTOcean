@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 import SphrSeqFFTVisPKG.instrument.myInstrument;
 import SphrSeqFFTVisPKG.note.myChord;
 import SphrSeqFFTVisPKG.note.myNote;
-import SphrSeqFFTVisPKG.note.enums.durType;
+import SphrSeqFFTVisPKG.note.enums.noteDurType;
 import SphrSeqFFTVisPKG.ui.mySphereWindow;
 import base_JavaProjTools_IRender.base_Render_Interface.IRenderInterface;
 import base_Math_Objects.MyMathUtils;
@@ -348,7 +348,7 @@ public class mySphereCntl {
 		for(int i =0; i<drawnNotes.size();++i){	myNote n = drawnNotes.get(i); addSphereNote(n, getTickFromAlpha(n.sphereAlpha));}
 	}	
 	
-	private final static float tickScale = 4 * durType.Whole.getVal() * 1.0f/(MyMathUtils.DEG_TO_RAD_F * 360.0f);
+	private final static float tickScale = 4 * noteDurType.Whole.getVal() * 1.0f/(MyMathUtils.DEG_TO_RAD_F * 360.0f);
 	//return integer key for notes for map - degrees? 
 	//public int getTickFromAlpha(float alpha){ return (int)(alpha * (PConstants.RAD_TO_DEG/360.0f) * 4 * durType.Whole.getVal());}		//convert from alpha to ticks - one whole circle is 4 whole notes
 	public int getTickFromAlpha(float alpha){ return (int)(alpha * tickScale);}		//convert from alpha to ticks - one whole circle is 4 whole notes

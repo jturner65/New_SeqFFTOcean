@@ -8,7 +8,7 @@ import SphrSeqFFTVisPKG.clef.enums.clefType;
 import SphrSeqFFTVisPKG.instrument.myInstrument;
 import SphrSeqFFTVisPKG.measure.myMeasure;
 import SphrSeqFFTVisPKG.note.myNote;
-import SphrSeqFFTVisPKG.note.enums.durType;
+import SphrSeqFFTVisPKG.note.enums.noteDurType;
 import SphrSeqFFTVisPKG.note.enums.noteValType;
 import SphrSeqFFTVisPKG.staff.myKeySig;
 import SphrSeqFFTVisPKG.staff.myStaff;
@@ -55,7 +55,7 @@ public class mySequencerWindow extends myMusicSimWindow {
 	//public AudioOutput clickNoteOut;
 	public myInstrument prlKeyboard;					//piano to play clicks on keys
 	
-	public durType defaultNoteLength;			//default note length for each square in piano roll
+	public noteDurType defaultNoteLength;			//default note length for each square in piano roll
 	
 	public mySequencerWindow(SeqVisFFTOcean _p, String _n, int _flagIdx, int[] fc, int[] sc, float[] rd, float[] rdClosed,String _winTxt, boolean _canDrawTraj) {
 		super(_p, _n, _flagIdx, fc, sc, rd, rdClosed, _winTxt, _canDrawTraj);
@@ -95,7 +95,7 @@ public class mySequencerWindow extends myMusicSimWindow {
 		//initNoteOutIndiv();
 
 		//curTrajAraIDX = 0;
-		defaultNoteLength = durType.Quarter;		
+		defaultNoteLength = noteDurType.Quarter;		
 		
 		playClickNote = false;
 		//clickNoteOut = pa.getAudioOut();
@@ -169,7 +169,7 @@ public class mySequencerWindow extends myMusicSimWindow {
 	}//setupMenuClkRegions
 	
 	public void updateGridXandY(boolean setTempo){
-		gridX = (int)(calcGridWidth(rectDim[2]) * (setTempo ? (defaultNoteLength.getVal()/(durType.Quarter.getVal()*1.0f)) : 1));//default width is quarter note
+		gridX = (int)(calcGridWidth(rectDim[2]) * (setTempo ? (defaultNoteLength.getVal()/(noteDurType.Quarter.getVal()*1.0f)) : 1));//default width is quarter note
 		gridY = calcGridHeight(rectDim[3]);
 		bkModY = .3f * gridY;
 		//pa.outStr2Scr("wkwidth : " + whiteKeyWidth+ " set Tempo : " + setTempo);
@@ -186,7 +186,7 @@ public class mySequencerWindow extends myMusicSimWindow {
 	}//setCurrentKeySigVal//pbe.updateTimSigTempo(glblTempo, gridX,  glblTimeSig.getTicksPerBeat());
 	
 	//set time signature at time passed - for score, set it at nearest measure boundary - global time sig need to be set by here
-	protected void setLocalTimeSigValIndiv(int tsnum, int tsdenom, durType _beatNoteType, float time){		
+	protected void setLocalTimeSigValIndiv(int tsnum, int tsdenom, noteDurType _beatNoteType, float time){		
 		myTimeSig ts = new myTimeSig(pa, tsnum, tsdenom, _beatNoteType);	
 		if(score != null){
 			score.setCurrentTimeSig(time, ts);
@@ -212,7 +212,7 @@ public class mySequencerWindow extends myMusicSimWindow {
 	}//setCurrentKeySigVal//pbe.updateTimSigTempo(glblTempo, gridX,  glblTimeSig.getTicksPerBeat());
 	
 	//set time signature at time passed - for pa.score, set it at nearest measure boundary - global time sig need to be set by here
-	protected void setGlobalTimeSigValIndiv(int tsnum, int tsdenom, durType _beatNoteType, float time){		
+	protected void setGlobalTimeSigValIndiv(int tsnum, int tsdenom, noteDurType _beatNoteType, float time){		
 		//NOTE ! global time sig need to be set by here		
 		if(score != null){
 			//score.setCurrentTimeSig(time, glblTimeSig);
@@ -290,7 +290,7 @@ public class mySequencerWindow extends myMusicSimWindow {
 	public void setUIWinVals(int UIidx){
 		switch(UIidx){
 		case guiTrajToDraw 		: { curTrajAraIDX = (int)guiObjs[UIidx].getVal(); break;}
-		case noteDfltLen 		: {	defaultNoteLength = durType.getVal((int)guiObjs[UIidx].getVal());updateGridXandY(true);break;}
+		case noteDfltLen 		: {	defaultNoteLength = noteDurType.getVal((int)guiObjs[UIidx].getVal());updateGridXandY(true);break;}
 		case trajRepeats		: { numTrajNoteRpts = (int)guiObjs[UIidx].getVal(); break;}
 		}		
 	}//setUIWinVals
@@ -301,7 +301,7 @@ public class mySequencerWindow extends myMusicSimWindow {
 		switch(UIidx){//score.staffs.size()
 			//case guiTrajToDraw 		: {return pa.InstrList[(validx % score.staffs.size())].instrName; }
 			case guiTrajToDraw 		: {return score.staffs.get(score.staffDispOrder.get(validx % score.staffs.size())).instrument.instrName; }
-			case noteDfltLen 		: {return durType.noteDurNames[validx];}
+			case noteDfltLen 		: {return noteDurType.noteDurNames[validx];}
 		}
 		return "";
 	}//dispUIListObj

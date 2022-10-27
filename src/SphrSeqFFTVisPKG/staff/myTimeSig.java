@@ -1,5 +1,5 @@
 package SphrSeqFFTVisPKG.staff;
-import SphrSeqFFTVisPKG.note.enums.durType;
+import SphrSeqFFTVisPKG.note.enums.noteDurType;
 import SphrSeqFFTVisPKG.staff.myTimeSig;
 import base_JavaProjTools_IRender.base_Render_Interface.IRenderInterface;
 
@@ -8,10 +8,10 @@ public class myTimeSig{
 	public static int tsigCnt = 0;
 	public final int ID;
 	public final int beatPerMeas, beatNote;
-	public final durType noteType;
+	public final noteDurType noteType;
 	public float[] drawDim;
 	
-	public myTimeSig(IRenderInterface _p, int _bPerMeas, int _beatNote, durType _noteType){
+	public myTimeSig(IRenderInterface _p, int _bPerMeas, int _beatNote, noteDurType _noteType){
 		p=_p;
 		ID = tsigCnt++;
 		beatPerMeas =_bPerMeas; 

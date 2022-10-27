@@ -245,8 +245,8 @@ public class myInstrument {
 	public int addSphNotesToPlay(SortedMap<Integer, myNote> tmpNotes, int stTime){
 		//for every note this instrument wants to play, get next available noteChannel, give it the note, turn it on		
 		if((null == tmpNotes) || (tmpNotes.size() == 0)){return 0;}				//no notes passed
-		myNote _n;
-		myNoteChannel _nc;
+//		myNote _n;
+//		myNoteChannel _nc;
 		if(!instFlags[mstOutPtchIDX]){patchMstrOut();}
 		for(SortedMap.Entry<Integer, myNote> note : tmpNotes.entrySet()) {
 			int retCode = playSingleSphNote(note.getValue());
@@ -266,9 +266,10 @@ public class myInstrument {
 	public int addSphNotesToStop(SortedMap<Integer,ArrayList<myNote>> tmpNotes){
 		//for every note passed in, find the note channel that is playing it, stop it playing, release the note channel from the playing deque, and set that channel's note to null
 		if((null == tmpNotes) || (tmpNotes.size() == 0)){return 0;}				//no notes passed
-		int retCodeSt = 1, tmpRetCode;
-		myNote _n;
-		myNoteChannel _nc;
+		int retCodeSt = 1;
+//		int tmpRetCode;
+//		myNote _n;
+//		myNoteChannel _nc;
 		for(SortedMap.Entry<Integer, ArrayList<myNote>> noteAra : tmpNotes.entrySet()) { 
 			if(noteAra==null){continue;}
 			ArrayList<myNote> nAra = noteAra.getValue();

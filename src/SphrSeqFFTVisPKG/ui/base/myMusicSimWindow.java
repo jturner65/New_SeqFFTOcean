@@ -11,7 +11,7 @@ import SphrSeqFFTVisPKG.note.NoteData;
 import SphrSeqFFTVisPKG.note.myChord;
 import SphrSeqFFTVisPKG.note.myNote;
 import SphrSeqFFTVisPKG.note.enums.chordType;
-import SphrSeqFFTVisPKG.note.enums.durType;
+import SphrSeqFFTVisPKG.note.enums.noteDurType;
 import SphrSeqFFTVisPKG.note.enums.noteValType;
 import SphrSeqFFTVisPKG.score.myScore;
 import SphrSeqFFTVisPKG.staff.myKeySig;
@@ -47,7 +47,7 @@ public abstract class myMusicSimWindow extends myDispWindow {
 	public static myKeySig glblKeySig;
 	public static float glblTempo;
 	public static myTimeSig glblTimeSig;
-	public static durType glblBeatNote;
+	public static noteDurType glblBeatNote;
 	public static ArrayList<noteValType> glblKeyNotesAra;					//notes in the current key -- used to force notes to key
 	
 	public PImage[] restImgs, clefImgs,sphereImgs, moonImgs; 			//array of images for rests, clefs and textures for spheres
@@ -119,9 +119,7 @@ public abstract class myMusicSimWindow extends myDispWindow {
 	//individual instrument note output - replaces scrollNoteOut
 	//public AudioOutput[] instrNoteOut;
 	public float tempoDurRatio = 1.0f;
-	
-	//display note width multiplier
-	public final float ntWdthMult = 2.5f;
+
 
 	//list of clefs  myClef(CAProject5 _p, String _name, clefVal _clef, NoteData _mdNote,PImage _img)
 	//Notedata : nValType _name, int _octave
@@ -145,16 +143,6 @@ public abstract class myMusicSimWindow extends myDispWindow {
 			drums2InstIDX		= 11;
 	public static final int numInstsAvail = 12;	
 
-	
-	//pxl displacements to draw rests
-	public float[][] restDisp = new float[][] {
-		new float[]{0,-20},
-		new float[]{0,-12},
-		new float[]{0,-12},
-		new float[]{0,-22},
-	};
-	
-	
 	public myMusicSimWindow(IRenderInterface _p, GUI_AppManager _AppMgr, String _n, int _flagIdx, int[] fc,  int[] sc, float[] rd, float[] rdClosed, String _winTxt) {
 		super(_p,_AppMgr,_n, _flagIdx, fc, sc,rd, rdClosed,_winTxt);
 
@@ -228,22 +216,7 @@ public abstract class myMusicSimWindow extends myDispWindow {
 /////////////////////
 ///Misc utils
 /////////////////////
-	//get nValType value and octave of note displaced by dispamt # of half steps (negative for down)
-	public int[] getNoteDisp(NoteData _note, int dispAmt){
-		int[] res = new int[]{0,0};
-		int octDisp = dispAmt/12;		//+/- # of octaves
-		//if(abs(dispAmt)>12){outStr2Scr("----->Danger attempting to modify note by more than 1 octave in getNoteDisp.  ",true);return res;}			
-		int oldNVal = _note.name.getVal(),
-			newNValNoMod = (oldNVal + dispAmt),
-			newNVal = (newNValNoMod+12)%12;
-		res[0] = newNVal;
-		res[1] = _note.octave;
-		int octModAmt = 0;
-		if(newNVal < newNValNoMod)		{	octModAmt++;}		//if newVal is < newVal without mod then wrapped around while adding 
-		else if(newNVal > newNValNoMod) {	octModAmt--;}		//if newVal is > newVal without mod then wrapped around negatively while subtracting			
-		return res;			
-	}
-		
+	
 	
 	//when score is set up or modified, use this to distribute references to all windows of current score
 	public void setScoreInstrVals(TreeMap<String,myInstrument> _instrs, String[] _scoreStaffNames){
@@ -276,7 +249,7 @@ public abstract class myMusicSimWindow extends myDispWindow {
 		setGlobalKeySigValIndiv(idx, pbe.getCurrentTime());	
 	}//	setGlobalKeySigVal
 	//set time signature at time passed - for score, set it at nearest measure boundary
-	public void setGlobalTimeSigVal(int tsnum, int tsdenom, durType _beatNoteType){
+	public void setGlobalTimeSigVal(int tsnum, int tsdenom, noteDurType _beatNoteType){
 		glblBeatNote = _beatNoteType;
 		//msgObj.dispInfoMessage("myMusicSimWindow","Func","SetCurrentTimeSigVal in myDispWIn : " + tsnum + " / " + tsdenom);
 		glblTimeSig = new myTimeSig(pa, tsnum, tsdenom, glblBeatNote);		
@@ -324,7 +297,7 @@ public abstract class myMusicSimWindow extends myDispWindow {
 		setLocalKeySigValIndiv(ks,keyNotesAra, pbe.getCurrentTime());	
 	}	
 	//set time signature at time passed - for score, set it at nearest measure boundary
-	public void setLocalTimeSigVal(int tsnum, int tsdenom, durType _beatNoteType){
+	public void setLocalTimeSigVal(int tsnum, int tsdenom, noteDurType _beatNoteType){
 		//myTimeSig ts = new myTimeSig(pa, tsnum, tsdenom, _beatNoteType);		
 		setLocalTimeSigValIndiv(tsnum, tsdenom, _beatNoteType, pbe.getCurrentTime());	
 	}
@@ -408,84 +381,7 @@ public abstract class myMusicSimWindow extends myDispWindow {
 		_out.resumeNotes();
 	}
 
-	//note is tilted ellipse with stem (if  not whole note), and filled (if not whole or half note) and with flags (if 8th or smaller)
-	//type  == type of note (0 is whole, 1 is half, 2 is qtr, 3 is eighth, etc)
-	//nextNoteLoc is location of next note yikes.
-	//flags : 0 : isDotted, 1 : isTuple, 2 : isRest, 3 : isChord, 4 : drawStemUp,   5 : isConnected, 6 :showDisplacement msg (8va, etc), 7 : isInStaff, 8 : isFlipped(part of chord and close to prev note, put note on other side of stem),
-	//grpPos : 0 first in group of stem-tied notes, 1 : last in group of stemTied notes, otherwise neither 
-	public void drawNote(float noteW, myVector nextNoteLoc, int noteTypIdx, int grpPos, boolean[] flags, float numLedgerLines){
-		pa.pushMatState(); 
-		//draw body
-		//noteIdx : -2,-1, 0, 1, 2, 3
-		pa.rotate(MyMathUtils.FIFTH_PI_F,0,0,1);
-		pa.setStrokeWt(1);
-		pa.setColorValFill(IRenderInterface.gui_Black, 255);
-		pa.setColorValStroke(IRenderInterface.gui_Black, 255);
-		if(flags[myNote.isChord] && flags[myNote.isFlipped]){pa.translate(-noteW,0,0);}		//only flip if close to note
-		//line(-noteW,0,0,noteW,0,0);//ledger lines, to help align the note
-		if(noteTypIdx <= -1){	pa.setStrokeWt(2);	pa.noFill();	}
-		pa.drawEllipse2D(0,0,noteW, .75f*noteW);
-		pa.rotate(-MyMathUtils.QUARTER_PI_F,0,0,1);
-		if(flags[myNote.isDotted]){pa.drawEllipse2D(1.5f*noteW,0,3,3);	}//is dotted
-		if(noteTypIdx > -2){//has stem and is not last in stemmed group
-			if(flags[myNote.drawStemUp]){	pa.translate(-.5*noteW,0,0); pa.drawLine(0,0,0,0,-4*noteW,0);}//draw up
-			else {							pa.translate(.5*noteW,0,0);pa.drawLine(0,0,0,0,4*noteW,0);}//drawDown
-			if((noteTypIdx > 0) && (1 != grpPos)){//has flag and is not last in group so draw flag
-				float flagW, flagH1;
-				if(flags[myNote.drawCnncted]){	//is tied,  TODO
-					flagW = (float)nextNoteLoc.x;
-					flagH1 = (float)nextNoteLoc.y;
-				} else{
-					flagW = 2 * noteW;
-					flagH1 = noteW;
-				}
-				float moveDir;//direction multiplier
-				if(flags[myNote.drawStemUp]){	 moveDir = noteW; pa.translate(0,-4*noteW,0);}//draw up
-				else {			 moveDir = -noteW;pa.translate(0,4*noteW,0);}//drawDown
-				float yVal = 0,flagH2 = - .5f*moveDir;;
-				for(int i =0; i<noteTypIdx;++i){ // noteIdx is # of flags to draw too
-					quad(0,yVal,flagW,yVal+flagH1,flagW,yVal+flagH1+flagH2,0,yVal + flagH2);
-					yVal += moveDir;
-				}
-			}			
-		}
-		if(numLedgerLines != 0.0f){ //draw ledger lines outside staff, either above or below (if negative # then below note, above staff)
-			pa.translate(-noteW*.5f,0);
-			int mult;
-			if(numLedgerLines < 0 ){mult=1;} else {mult=-1;}
-			if(flags[myNote.isOnLdgrLine]){//put ledger line through middle of note
-				pa.drawLine(-noteW,0,0,noteW,0,0);					
-			} else {
-				pa.drawLine(-noteW,.5f*noteW,0,noteW,.5f*noteW,0);			
-			}
-			pa.pushMatState(); 
-			if(Math.abs(numLedgerLines) - (int)(Math.abs(numLedgerLines)) != 0){pa.translate(0,.5f*noteW);}
-			for(int i =0;i<Math.abs(numLedgerLines);++i){
-				pa.translate(0,mult*noteW);
-				pa.drawLine(-noteW,0,0,noteW,0,0);
-			}
-			pa.popMatState();
-			
-		}
-		pa.popMatState();
-	}//draw a note head
 
-	//flags : 0 : isDotted, 1 : drawUp, 2 : isFlipped(part of chord)
-	//durType vals : Whole(256),Half(128),Quarter(64),Eighth(32),Sixteenth(16),Thirtisecond(8); 
-	public void drawRest(float restW, int restIdx, boolean isDotted){
-		pa.pushMatState(); 
-		//draw rest
-		//restIdx : -2,-1, 0, 1, 2, 3
-		if(restIdx > -1){//draw image
-			pa.translate(restDisp[restIdx][0], restDisp[restIdx][1],0);		//center image of rest - move up 2 ledger lines
-			pa.scale(1,1.2f,1);
-			((my_procApplet) pa).image(restImgs[restIdx], 0,0);				
-		} else {//draw box
-			if(restIdx == -2){	pa.translate(0,-.5f * restW,0);}//whole rest is above half rest
-			pa.drawRect(-.5f * restW, 0, restW,.5f * restW);				
-		}
-		pa.popMatState();
-	}
 	
 	public void drawShape(PShape sh) {
 		((my_procApplet) pa).shape(sh);	
@@ -580,14 +476,14 @@ public abstract class myMusicSimWindow extends myDispWindow {
 	//set current key signature, at time passed - for score, set it at nearest measure boundary
 	protected abstract void setGlobalKeySigValIndiv(int idx, float time);	
 	//set time signature at time passed - for score, set it at nearest measure boundary
-	protected abstract void setGlobalTimeSigValIndiv(int tsnum, int tsdenom, durType _beatNoteType, float time);	
+	protected abstract void setGlobalTimeSigValIndiv(int tsnum, int tsdenom, noteDurType _beatNoteType, float time);	
 	//set time signature at time passed - for score, set it at nearest measure boundary
 	protected abstract void setGlobalTempoValIndiv(float tempo, float time);
 	
 	//set current key signature, at time passed - for score, set it at nearest measure boundary
 	protected abstract void setLocalKeySigValIndiv(myKeySig lclKeySig, ArrayList<noteValType> lclKeyNotesAra, float time);	
 	//set time signature at time passed - for score, set it at nearest measure boundary
-	protected abstract void setLocalTimeSigValIndiv(int tsnum, int tsdenom, durType _beatNoteType, float time);	
+	protected abstract void setLocalTimeSigValIndiv(int tsnum, int tsdenom, noteDurType _beatNoteType, float time);	
 	//set time signature at time passed - for score, set it at nearest measure boundary
 	protected abstract void setLocalTempoValIndiv(float tempo, float time);
 

@@ -16,7 +16,7 @@ import SphrSeqFFTVisPKG.instrument.myInstrument;
 import SphrSeqFFTVisPKG.note.NoteData;
 import SphrSeqFFTVisPKG.note.myNote;
 import SphrSeqFFTVisPKG.note.enums.chordType;
-import SphrSeqFFTVisPKG.note.enums.durType;
+import SphrSeqFFTVisPKG.note.enums.noteDurType;
 import SphrSeqFFTVisPKG.note.enums.noteValType;
 import SphrSeqFFTVisPKG.score.myScore;
 import SphrSeqFFTVisPKG.ui.myInstEditWindow;
@@ -269,7 +269,7 @@ import ddf.minim.ugens.*;
 		setFocus();
 	}
 	public void loadAndSetImgs(){
-		numRestImges = durType.getNumVals() - 2;
+		numRestImges = noteDurType.getNumVals() - 2;
 		numClefImgs = clefType.getNumVals();			
 		numSphereImgs = 18;
 		
@@ -555,7 +555,7 @@ import ddf.minim.ugens.*;
 			myMusicSimWindow win = ((myMusicSimWindow) dispWinFrames[i]);
 			win.setGlobalTempoVal(120);		//set for right now
 			win.setGlobalKeySigVal(0);		//set for right now
-			win.setGlobalTimeSigVal(4,4,durType.getDurTypeForNote(4));		//set for right now
+			win.setGlobalTimeSigVal(4,4,noteDurType.getDurTypeForNote(4));		//set for right now
 			win.dispFlags[myMusicSimWindow.is3DWin] = dispWinIs3D[i];
 			//win.setTrajColors(winTrajFillClrs[i], winTrajStrkClrs[i]);
 		}	

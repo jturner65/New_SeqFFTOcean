@@ -4,7 +4,7 @@ import java.util.*;
 
 import SphrSeqFFTVisPKG.instrument.myInstrument;
 import SphrSeqFFTVisPKG.note.myNote;
-import SphrSeqFFTVisPKG.note.enums.durType;
+import SphrSeqFFTVisPKG.note.enums.noteDurType;
 import SphrSeqFFTVisPKG.note.enums.noteValType;
 import SphrSeqFFTVisPKG.staff.myKeySig;
 import SphrSeqFFTVisPKG.ui.base.myMusicSimWindow;
@@ -276,7 +276,7 @@ public class mySphereWindow extends myMusicSimWindow {
 			tunnelCrcls[i].z += zStep; 
 			tcScl = PApplet.map((float)(tunnelCrcls[i].z), zMin, zMax, 6,0) * .25f;
 			r = PApplet.map((float)(tunnelCrcls[i].z), zMin, zMax, tunnelRad*.01f, tunnelRad); 
-			a = PApplet.map((float)(tunnelCrcls[i].z), zMin, zMax, 111,255); 
+			a = (int)MyMathUtils.map((float)(tunnelCrcls[i].z), zMin, zMax, 111,255); 
 			tunnelCrcls[i].x = (pa.noise((float)((fc - tunnelCrcls[i].z) / 650.0f) - .5f) * rectDim[2] * tcScl); 
 			tunnelCrcls[i].y = (pa.noise((float)((fc + tunnelCrcls[i].z) / 650.0f) - tcYConst) * rectDim[3]* tcScl); 
 			pa.setStroke(0,a*.5f,a, a); 
@@ -478,7 +478,7 @@ public class mySphereWindow extends myMusicSimWindow {
 	protected void setGlobalKeySigValIndiv(int idx, float time){	}//setCurrentKeySigVal
 	@Override
 	//set time signature at time passed - for score, set it at nearest measure boundary
-	protected void setGlobalTimeSigValIndiv(int tsnum, int tsdenom, durType _d, float time){	}//setCurrentTimeSigVal
+	protected void setGlobalTimeSigValIndiv(int tsnum, int tsdenom, noteDurType _d, float time){	}//setCurrentTimeSigVal
 	@Override
 	//set time signature at time passed - for score, set it at nearest measure boundary
 	protected void setGlobalTempoValIndiv(float tempo, float time){	}//setCurrentTimeSigVal
@@ -487,7 +487,7 @@ public class mySphereWindow extends myMusicSimWindow {
 	protected void setLocalKeySigValIndiv(myKeySig lclKeySig, ArrayList<noteValType> lclKeyNotesAra, float time){}
 	@Override
 	//set time signature at time passed - for score, set it at nearest measure boundary
-	protected void setLocalTimeSigValIndiv(int tsnum, int tsdenom, durType _beatNoteType, float time){}
+	protected void setLocalTimeSigValIndiv(int tsnum, int tsdenom, noteDurType _beatNoteType, float time){}
 	@Override
 	//set time signature at time passed - for score, set it at nearest measure boundary
 	protected void setLocalTempoValIndiv(float tempo, float time){}

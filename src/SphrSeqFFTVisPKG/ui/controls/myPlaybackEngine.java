@@ -1,6 +1,6 @@
 package SphrSeqFFTVisPKG.ui.controls;
 
-import SphrSeqFFTVisPKG.note.enums.durType;
+import SphrSeqFFTVisPKG.note.enums.noteDurType;
 import SphrSeqFFTVisPKG.ui.base.myMusicSimWindow;
 import base_JavaProjTools_IRender.base_Render_Interface.IRenderInterface;
 import base_Math_Objects.MyMathUtils;
@@ -61,7 +61,7 @@ public class myPlaybackEngine {
 		curTime = 0; stTime = 0; 
 		stLoopTime = -1; endLoopTime = -1;
 		updateTimSigTempo(120);				//some default values
-		ticksPerBeat = durType.Quarter.getVal();
+		ticksPerBeat = noteDurType.Quarter.getVal();
 		pxlsPerBeat = 13;
 		curPxls = 0; stPixels = 0; 
 		stLoopPxls =-1; endLoopPxls = -1;

@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 import SphrSeqFFTVisPKG.note.myChord;
 import SphrSeqFFTVisPKG.note.myNote;
-import SphrSeqFFTVisPKG.note.enums.durType;
+import SphrSeqFFTVisPKG.note.enums.noteDurType;
 import SphrSeqFFTVisPKG.note.enums.noteValType;
 import SphrSeqFFTVisPKG.staff.myKeySig;
 import SphrSeqFFTVisPKG.staff.myStaff;
@@ -142,7 +142,7 @@ public class myMeasure {
 	}
 		
 	private int calcEndTime(){
-		int ticksPerMeasure = (int)(msrData.ts.tSigMult() * 4 * durType.Quarter.getVal());  //tSigMult gives fraction of 4 qtr notes total that make up measure		
+		int ticksPerMeasure = (int)(msrData.ts.tSigMult() * 4 * noteDurType.Quarter.getVal());  //tSigMult gives fraction of 4 qtr notes total that make up measure		
 		//int measDur = stTime + (int)((1.0f/tempo) * timeSig.tSigMult() * (p.ticksPerBeat)); 		//tempo is beats per minute, 1/ tempo is minutes per beat, p.ticksPerBeat is ticks per beat
 		int measDur = ticksPerMeasure; 		//don't have measure control playback tempo, allow this to be controlled by play back engine
 		msrData.endTime = msrData.stTime + measDur;

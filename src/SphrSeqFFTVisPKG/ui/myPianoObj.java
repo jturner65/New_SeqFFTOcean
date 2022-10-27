@@ -61,7 +61,7 @@ public class myPianoObj{
 		float stY = pianoDim[1];
 		for(int i =0; i < numWhiteKeys; ++i){
 			pianoWKeyDims[i] = new float[]{0,stY,wWide,wHigh};	
-			int iMod = i % 7;
+			int iMod = i % noteValType.wKeyVals.length;
 			pianoWNotes[i] = new NoteData(noteValType.wKeyVals[iMod], octave);
 			if(noteValType.wKeyVals[iMod] == noteValType.C){
 				octave--;

@@ -1,7 +1,7 @@
 package SphrSeqFFTVisPKG.note;
 
 import SphrSeqFFTVisPKG.SeqVisFFTOcean;
-import SphrSeqFFTVisPKG.note.enums.durType;
+import SphrSeqFFTVisPKG.note.enums.noteDurType;
 import SphrSeqFFTVisPKG.note.enums.noteValType;
 import base_JavaProjTools_IRender.base_Render_Interface.IRenderInterface;
 
@@ -23,7 +23,7 @@ public class NoteData implements Comparable<NoteData> {//only compares start tim
 	
 	//note duration and placement
 	public int dur;			//duration, where 256 is a whole note (4 beats)	
-	public durType typ;			//type of note
+	public noteDurType typ;			//type of note
 	
 	public int typIdx;			//idx used when displaying - single calculation
 	public int stTime;			//when this note starts from beginning of sequence in # of ticks
@@ -67,6 +67,24 @@ public class NoteData implements Comparable<NoteData> {//only compares start tim
 		setNoteVals(noteValType.getVal(newVal),octave+mod, amplitude);		//mod 12 because we want 0-11 (avoid rest==12)			
 	}//
 	
+	//get nValType value and octave of note displaced by dispamt # of half steps (negative for down)
+	public int[] getNoteDisp(int dispAmt){
+		int[] res = new int[]{0,0};
+		int octDisp = dispAmt/12;		//+/- # of octaves
+		//if(abs(dispAmt)>12){outStr2Scr("----->Danger attempting to modify note by more than 1 octave in getNoteDisp.  ",true);return res;}			
+		int oldNVal = name.getVal(),
+			newNValNoMod = (oldNVal + dispAmt),
+			newNVal = (newNValNoMod+12)%12;
+		res[0] = newNVal;
+		res[1] = octave;
+		int octModAmt = 0;
+		if(newNVal < newNValNoMod)		{	octModAmt++;}		//if newVal is < newVal without mod then wrapped around while adding 
+		else if(newNVal > newNValNoMod) {	octModAmt--;}		//if newVal is > newVal without mod then wrapped around negatively while subtracting			
+		return res;			
+	}
+	
+	
+	
 	//set volume of note TODO
 	public void setAmplitude(float _amp){
 		setNoteVals(name,octave,_amp);
@@ -74,12 +92,12 @@ public class NoteData implements Comparable<NoteData> {//only compares start tim
 
 	//calculate appropriate start time in beats for minim. derp
 	public float getStartPlayback(){
-		float res = stTime/(1.0f*durType.Quarter.getVal());
+		float res = stTime/(1.0f*noteDurType.Quarter.getVal());
 		return res;
 	}
 	//this returns the duration in terms of fractional beats, where a beat is a quarter note
 	public float getDurPlayback(){		
-		float res = dur/(1.0f*durType.Quarter.getVal());
+		float res = dur/(1.0f*noteDurType.Quarter.getVal());
 		return res;
 	}
 	//this sets duration from the piano scroll, where the duration is in terms of beats, and needs to be multiplied by qtr note value
@@ -89,7 +107,7 @@ public class NoteData implements Comparable<NoteData> {//only compares start tim
 	}
 	//this adds duration from the piano scroll, where the duration is in terms of beats, and needs to be multiplied by qtr note value
 	public void addDurScroll(float _scrDur){
-		dur += (int)(_scrDur * durType.Quarter.getVal());
+		dur += (int)(_scrDur * noteDurType.Quarter.getVal());
 		setDurType();		
 	}
 	//set duration and durType - all duration-modification calcs need to be called before this
@@ -100,22 +118,22 @@ public class NoteData implements Comparable<NoteData> {//only compares start tim
 	//durType {Whole(256),Half(128),Quarter(64),Eighth(32),Sixteenth(16),Thirtisecond(8);
 	//should be analytic
 	private void setDurType(){
-		if(dur >= durType.Half.getVal() * 1.75f){typ = durType.Whole; typIdx = -2; return;}
-		if(dur >= durType.Quarter.getVal() * 1.75f){typ = durType.Half;typIdx = -1; return;}
-		if(dur >= durType.Eighth.getVal() * 1.75f){typ = durType.Quarter; typIdx = 0;return;}
-		if(dur >= durType.Sixteenth.getVal() * 1.75f){typ = durType.Eighth;typIdx = 1; return;}
-		if(dur >= durType.Thirtisecond.getVal() * 1.75f){typ = durType.Sixteenth; typIdx = 2;return;}		
-		typ = durType.Thirtisecond;
+		if(dur >= noteDurType.Half.getVal() * 1.75f){typ = noteDurType.Whole; typIdx = -2; return;}
+		if(dur >= noteDurType.Quarter.getVal() * 1.75f){typ = noteDurType.Half;typIdx = -1; return;}
+		if(dur >= noteDurType.Eighth.getVal() * 1.75f){typ = noteDurType.Quarter; typIdx = 0;return;}
+		if(dur >= noteDurType.Sixteenth.getVal() * 1.75f){typ = noteDurType.Eighth;typIdx = 1; return;}
+		if(dur >= noteDurType.Thirtisecond.getVal() * 1.75f){typ = noteDurType.Sixteenth; typIdx = 2;return;}		
+		typ = noteDurType.Thirtisecond;
 		typIdx = 3;
 	}
 	
 	public void quantMe(){
-		if(dur >= durType.Half.getVal() * 1.75f){setDur(durType.Whole.getVal()); return;}
-		if(dur >= durType.Quarter.getVal() * 1.75f){setDur(durType.Half.getVal());  return;}
-		if(dur >= durType.Eighth.getVal() * 1.75f){setDur(durType.Quarter.getVal()); return;}
-		if(dur >= durType.Sixteenth.getVal() * 1.75f){setDur(durType.Eighth.getVal());  return;}
-		if(dur >= durType.Thirtisecond.getVal() * 1.75f){setDur(durType.Sixteenth.getVal()); return;}		
-		setDur(durType.Thirtisecond.getVal()); 
+		if(dur >= noteDurType.Half.getVal() * 1.75f){setDur(noteDurType.Whole.getVal()); return;}
+		if(dur >= noteDurType.Quarter.getVal() * 1.75f){setDur(noteDurType.Half.getVal());  return;}
+		if(dur >= noteDurType.Eighth.getVal() * 1.75f){setDur(noteDurType.Quarter.getVal()); return;}
+		if(dur >= noteDurType.Sixteenth.getVal() * 1.75f){setDur(noteDurType.Eighth.getVal());  return;}
+		if(dur >= noteDurType.Thirtisecond.getVal() * 1.75f){setDur(noteDurType.Sixteenth.getVal()); return;}		
+		setDur(noteDurType.Thirtisecond.getVal()); 
 	}
 	
 	//edit this notedata with new values
