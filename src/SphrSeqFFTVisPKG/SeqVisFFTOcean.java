@@ -30,7 +30,7 @@ import base_Math_Objects.vectorObjs.doubles.myPoint;
 import base_Math_Objects.vectorObjs.doubles.myVector;
 import base_Math_Objects.vectorObjs.floats.myPointf;
 import base_Math_Objects.vectorObjs.floats.myVectorf;
-import base_UI_Objects.windowUI.base.myDispWindow;
+import base_UI_Objects.windowUI.base.Base_DispWindow;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
@@ -710,7 +710,7 @@ import ddf.minim.ugens.*;
 
 	
 	//individual display/HUD windows for gui/user interaction
-	public myDispWindow[] dispWinFrames;
+	public Base_DispWindow[] dispWinFrames;
 	//idx's in dispWinFrames for each window
 	public static final int dispMenuIDX = 0,
 							dispPianoRollIDX = 1,
@@ -720,7 +720,7 @@ import ddf.minim.ugens.*;
 	
 	public static final int numDispWins = 5;	
 			
-	public int curFocusWin;				//which myDispWindow currently has focus 
+	public int curFocusWin;				//which Base_DispWindow currently has focus 
 	
 	//whether or not the display windows will accept a drawn trajectory -- eventually set InstEdit window to be drawable
 	public boolean[] canDrawInWin = new boolean[]{	false,true,true,false,true};		

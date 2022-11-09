@@ -3,9 +3,9 @@ package SphrSeqFFTVisPKG.ui;
 import SphrSeqFFTVisPKG.ui.base.myMusicSimWindow;
 import base_JavaProjTools_IRender.base_Render_Interface.IRenderInterface;
 import base_Math_Objects.vectorObjs.doubles.myVector;
-import base_UI_Objects.windowUI.uiObjs.myGUIObj;
+import base_UI_Objects.windowUI.uiObjs.base.Base_GUIObj;
 
-public class myGUIProgressBar extends myGUIObj{
+public class myGUIProgressBar extends Base_GUIObj{
 	public final float[] barDims;// = new float[] {.8f * pa.menuWidth, 10.0f};
 
 	public myGUIProgressBar(IRenderInterface _p, int _winID, String _name, myVector _start, myVector _end, double[] _minMaxMod, double _initVal, boolean[] _flags, double[] _off) {

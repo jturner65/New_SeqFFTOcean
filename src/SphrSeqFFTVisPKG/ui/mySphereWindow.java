@@ -14,7 +14,6 @@ import base_Math_Objects.MyMathUtils;
 import base_Math_Objects.vectorObjs.doubles.myPoint;
 import base_Math_Objects.vectorObjs.doubles.myVector;
 import base_UI_Objects.GUI_AppManager;
-import base_UI_Objects.windowUI.drawnObjs.myDrawnSmplTraj;
 import processing.core.PApplet;
 
 public class mySphereWindow extends myMusicSimWindow {
@@ -109,7 +108,7 @@ public class mySphereWindow extends myMusicSimWindow {
 		guiBoolVals = new boolean [][]{{}};						//per-object  list of boolean flags
 		
 		//since horizontal row of UI comps, uiClkCoords[2] will be set in buildGUIObjs		
-		guiObjs = new myGUIObj[numGUIObjs];			//list of modifiable gui objects
+		guiObjs = new Base_GUIObj[numGUIObjs];			//list of modifiable gui objects
 		if(numGUIObjs > 0){
 			buildGUIObjs(guiObjNames,guiStVals,guiMinMaxModVals,guiBoolVals,new double[]{xOff,yOff});			//builds a horizontal list of UI comps
 		}
@@ -232,7 +231,7 @@ public class mySphereWindow extends myMusicSimWindow {
 //			}
 //		}
 //		iterStatic++;
-//		this.dispFlags[myDispWindow.notesLoaded] = true;
+//		this.dispFlags[Base_DispWindow.notesLoaded] = true;
 //	}//addSphereNoteToPlayNow	
 	
 	public void setLights(){

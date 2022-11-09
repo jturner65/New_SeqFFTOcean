@@ -23,7 +23,8 @@ import base_Math_Objects.vectorObjs.doubles.myPoint;
 import base_Math_Objects.vectorObjs.doubles.myVector;
 import base_UI_Objects.GUI_AppManager;
 import base_UI_Objects.my_procApplet;
-import base_UI_Objects.windowUI.base.myDispWindow;
+import base_UI_Objects.windowUI.base.Base_DispWindow;
+import base_UI_Objects.windowUI.drawnObjs.DrawnSimpleTraj;
 import ddf.minim.AudioOutput;
 import ddf.minim.AudioRecorder;
 import ddf.minim.Minim;
@@ -39,7 +40,7 @@ import processing.core.PShape;
  * @author 7strb
  *
  */
-public abstract class myMusicSimWindow extends myDispWindow {
+public abstract class myMusicSimWindow extends Base_DispWindow {
 	
 	public myPlaybackEngine pbe;
 	
@@ -188,7 +189,7 @@ public abstract class myMusicSimWindow extends myDispWindow {
 //		vsblStLoc = new float[numSubScrInWin];
 //		seqVisStTime = new int[numSubScrInWin];
 		//drawnTrajAra[curDrnTrajScrIDX][curDrnTrajStaffIDX] init 2 and 10
-		tmpDrawnTraj= new myDrawnSmplTraj(pa,this,topOffY,trajFillClrCnst, trajStrkClrCnst, _trajIsFlat, !_trajIsFlat);
+		tmpDrawnTraj= new DrawnSimpleTraj(pa,this,topOffY,trajFillClrCnst, trajStrkClrCnst, _trajIsFlat, !_trajIsFlat);
 		curDrnTrajScrIDX = 0;
 //		for(int i =0;i<numSubScrInWin;++i){//
 //			vsblStLoc[i] = 0;
@@ -197,12 +198,12 @@ public abstract class myMusicSimWindow extends myDispWindow {
 	}	
 	//initialize traj-specific stuff for this window - only should be called once a song has been made, to have the # of trajectories available
 	protected void initTrajStructs(){
-		drwnTrajMap = new TreeMap<Integer,TreeMap<String,ArrayList<myDrawnSmplTraj>>>();
-		TreeMap<String,ArrayList<myDrawnSmplTraj>> tmpTrajMap;
+		drwnTrajMap = new TreeMap<Integer,TreeMap<String,ArrayList<DrawnSimpleTraj>>>();
+		TreeMap<String,ArrayList<DrawnSimpleTraj>> tmpTrajMap;
 		for(int scr =0;scr<numSubScrInWin; ++scr){
-			tmpTrajMap = new TreeMap<String,ArrayList<myDrawnSmplTraj>>();
+			tmpTrajMap = new TreeMap<String,ArrayList<DrawnSimpleTraj>>();
 			for(int traj =0; traj<numTrajInSubScr[scr]; ++traj){
-				tmpTrajMap.put(getTrajAraKeyStr(traj), new ArrayList<myDrawnSmplTraj>());			
+				tmpTrajMap.put(getTrajAraKeyStr(traj), new ArrayList<DrawnSimpleTraj>());			
 			}	
 			drwnTrajMap.put(scr, tmpTrajMap);
 		}		

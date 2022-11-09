@@ -162,7 +162,7 @@ public class mySequencerWindow extends myMusicSimWindow {
 			{true, false, true}
 		};						//per-object  list of boolean flags
 		//since horizontal row of UI comps, uiClkCoords[2] will be set in buildGUIObjs		
-		guiObjs = new myGUIObj[numGUIObjs];			//list of modifiable gui objects
+		guiObjs = new Base_GUIObj[numGUIObjs];			//list of modifiable gui objects
 		if(numGUIObjs > 0){
 			buildGUIObjs(guiObjNames,guiStVals,guiMinMaxModVals,guiBoolVals,new double[]{xOff,yOff});			//builds a horizontal list of UI comps
 		}

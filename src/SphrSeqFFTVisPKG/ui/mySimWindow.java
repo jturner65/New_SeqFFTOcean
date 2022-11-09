@@ -32,7 +32,7 @@ public class mySimWindow extends myMusicSimWindow {
 	String[] songList = new String[]{"Sati","PurpleHaze","Karelia","Choir"};
 	
 	public int songIDX;
-	AudioOutput notesIn;					//notes currently playing in system - just get output from current myDispWindow
+	AudioOutput notesIn;					//notes currently playing in system - just get output from current Base_DispWindow
 	
 	//current index of windowing function, from ui
 	int curWindowIDX = 0;
@@ -358,7 +358,7 @@ public class mySimWindow extends myMusicSimWindow {
 			//{false, false, true},      //threshIDX  	
 		};						//per-object  list of boolean flags
 			
-		guiObjs = new myGUIObj[numGUIObjs];			//list of modifiable gui objects
+		guiObjs = new Base_GUIObj[numGUIObjs];			//list of modifiable gui objects
 		if(numGUIObjs > 0){
 			buildGUIObjs(guiObjNames,guiStVals,guiMinMaxModVals,guiBoolVals,new double[]{xOff,yOff});			//builds a horizontal list of UI comps
 		}
