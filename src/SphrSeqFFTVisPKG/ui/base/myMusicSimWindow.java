@@ -24,7 +24,7 @@ import base_Math_Objects.vectorObjs.doubles.myVector;
 import base_UI_Objects.GUI_AppManager;
 import base_UI_Objects.my_procApplet;
 import base_UI_Objects.windowUI.base.Base_DispWindow;
-import base_UI_Objects.windowUI.drawnObjs.DrawnSimpleTraj;
+import base_UI_Objects.windowUI.drawnTrajectories.DrawnSimpleTraj;
 import ddf.minim.AudioOutput;
 import ddf.minim.AudioRecorder;
 import ddf.minim.Minim;
