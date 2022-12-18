@@ -17,7 +17,7 @@ import base_UI_Objects.my_procApplet;
 
 /**
  * fundamental class to hold and process a single note played by a single instrument
- * @author 7strb
+ * @author John Turner
  *
  */
 public class myNote {

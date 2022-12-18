@@ -7,7 +7,7 @@ import base_JavaProjTools_IRender.base_Render_Interface.IRenderInterface;
 
 /**
  * convenience class to hold the important values for a note
- * @author 7strb
+ * @author John Turner
  *
  */
 public class NoteData implements Comparable<NoteData> {//only compares start time
