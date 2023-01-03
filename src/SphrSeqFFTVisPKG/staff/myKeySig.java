@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 import SphrSeqFFTVisPKG.clef.enums.keySigVals;
 import SphrSeqFFTVisPKG.note.enums.noteValType;
-import base_JavaProjTools_IRender.base_Render_Interface.IRenderInterface;
+import base_Render_Interface.IRenderInterface;
 
 public class myKeySig {
 	public IRenderInterface p;

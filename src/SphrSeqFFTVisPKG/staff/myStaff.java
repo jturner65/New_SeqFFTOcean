@@ -14,7 +14,7 @@ import SphrSeqFFTVisPKG.note.enums.noteValType;
 import SphrSeqFFTVisPKG.score.myScore;
 import SphrSeqFFTVisPKG.ui.myPianoObj;
 import SphrSeqFFTVisPKG.ui.base.myMusicSimWindow;
-import base_JavaProjTools_IRender.base_Render_Interface.IRenderInterface;
+import base_Render_Interface.IRenderInterface;
 
 import java.util.SortedMap;
 

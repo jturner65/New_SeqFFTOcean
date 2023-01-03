@@ -36,7 +36,7 @@ import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.Animator;
 
 import SphrSeqFFTVisPKG.ui.mySimWindow;
-import base_JavaProjTools_IRender.base_Render_Interface.IRenderInterface;
+import base_Render_Interface.IRenderInterface;
 import base_Math_Objects.MyMathUtils;
 import jcuda.Pointer;
 import jcuda.Sizeof;

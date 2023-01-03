@@ -11,7 +11,7 @@ import SphrSeqFFTVisPKG.staff.myKeySig;
 import SphrSeqFFTVisPKG.staff.myStaff;
 import SphrSeqFFTVisPKG.ui.base.myMusicSimWindow;
 import SphrSeqFFTVisPKG.ui.controls.mySphereCntl;
-import base_JavaProjTools_IRender.base_Render_Interface.IRenderInterface;
+import base_Render_Interface.IRenderInterface;
 
 //collection of notes related in some way for a single instrument, also holds data for root of chord
 public class myChord extends myNote{

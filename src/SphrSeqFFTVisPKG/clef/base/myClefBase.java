@@ -4,7 +4,7 @@ import SphrSeqFFTVisPKG.clef.enums.clefType;
 import SphrSeqFFTVisPKG.note.NoteData;
 import SphrSeqFFTVisPKG.note.enums.noteValType;
 import SphrSeqFFTVisPKG.ui.base.myMusicSimWindow;
-import base_JavaProjTools_IRender.base_Render_Interface.IRenderInterface;
+import base_Render_Interface.IRenderInterface;
 import processing.core.PImage;
 
 public abstract class myClefBase{

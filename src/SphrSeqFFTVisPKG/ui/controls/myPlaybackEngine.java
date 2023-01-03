@@ -2,7 +2,7 @@ package SphrSeqFFTVisPKG.ui.controls;
 
 import SphrSeqFFTVisPKG.note.enums.noteDurType;
 import SphrSeqFFTVisPKG.ui.base.myMusicSimWindow;
-import base_JavaProjTools_IRender.base_Render_Interface.IRenderInterface;
+import base_Render_Interface.IRenderInterface;
 import base_Math_Objects.MyMathUtils;
 
 /**

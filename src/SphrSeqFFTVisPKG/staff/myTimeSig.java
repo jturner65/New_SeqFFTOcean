@@ -1,7 +1,7 @@
 package SphrSeqFFTVisPKG.staff;
 import SphrSeqFFTVisPKG.note.enums.noteDurType;
 import SphrSeqFFTVisPKG.staff.myTimeSig;
-import base_JavaProjTools_IRender.base_Render_Interface.IRenderInterface;
+import base_Render_Interface.IRenderInterface;
 
 public class myTimeSig{
 	public IRenderInterface p;

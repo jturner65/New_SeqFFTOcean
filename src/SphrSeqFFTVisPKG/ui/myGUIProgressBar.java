@@ -1,7 +1,7 @@
 package SphrSeqFFTVisPKG.ui;
 
 import SphrSeqFFTVisPKG.ui.base.myMusicSimWindow;
-import base_JavaProjTools_IRender.base_Render_Interface.IRenderInterface;
+import base_Render_Interface.IRenderInterface;
 import base_Math_Objects.vectorObjs.doubles.myVector;
 import base_UI_Objects.windowUI.uiObjs.base.Base_GUIObj;
 
