@@ -369,10 +369,10 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 	 * @return count of -all- booleans to be managed by privFlags
 	 */
 	@Override
-	public final int initAllPrivBtns(ArrayList<Object[]> tmpBtnNamesArray) {
+	public final int initAllUIButtons(ArrayList<Object[]> tmpBtnNamesArray) {
 		
 		
-		return initAllPrivBtns(tmpBtnNamesArray);
+		return initAllUIButtons(tmpBtnNamesArray);
 	}
 	public abstract int initAllPrivBtns_Indiv(ArrayList<Object[]> tmpBtnNamesArray);
 	
