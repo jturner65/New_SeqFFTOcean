@@ -2385,7 +2385,7 @@ import ddf.minim.ugens.*;
 	 * @param txtAra
 	 */
 	@Override
-	public void showTxtAra(myPointf P, float rad, int det, int[] clrs, String[] txtAra) {//only call with set fclr and sclr - idx0 == fill, idx 1 == strk, idx2 == txtClr
+	public void showTextAra(myPointf P, float rad, int det, int[] clrs, String[] txtAra) {//only call with set fclr and sclr - idx0 == fill, idx 1 == strk, idx2 == txtClr
 		pushMatState(); 
 		setColorValFill(clrs[0],255); 
 		setColorValStroke(clrs[1],255);
@@ -2405,7 +2405,7 @@ import ddf.minim.ugens.*;
 	 * @param rectDims
 	 */
 	@Override
-	public void showBoxTxtAra(myPointf P, float rad, int det, int[] clrs, String[] txtAra, float[] rectDims) {
+	public void showBoxTextAra(myPointf P, float rad, int det, int[] clrs, String[] txtAra, float[] rectDims) {
 		pushMatState();  		
 			setColorValFill(clrs[0],255); 
 			setColorValStroke(clrs[1],255);
