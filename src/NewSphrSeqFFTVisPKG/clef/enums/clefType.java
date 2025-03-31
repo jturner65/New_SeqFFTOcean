@@ -4,13 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum clefType{
-	Treble(0), Bass(1), Alto(2), Tenor(3), Piano(4), Drum(5); 
-	private int value; 
+	Treble, Bass, Alto, Tenor, Piano, Drum; 
 	private static Map<Integer, clefType> map = new HashMap<Integer, clefType>(); 
-    static { for (clefType enumV : clefType.values()) { map.put(enumV.value, enumV);}}
-	private clefType(int _val){value = _val;} 
-	public int getVal(){return value;} 	
-	public static clefType getVal(int idx){return map.get(idx);}
+    static { for (clefType enumV : clefType.values()) { map.put(enumV.ordinal(), enumV);}}
+	public int getVal(){return ordinal();} 	
+	public static clefType getEnumByIndex(int idx){return map.get(idx);}
+	public static clefType getEnumFromValue(int idx){return map.get(idx);}
 	public static int getNumVals(){return map.size();}						//get # of values in enum
 	/**
 	 * where is middle c for passed clef type's notes

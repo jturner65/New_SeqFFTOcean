@@ -64,7 +64,7 @@ public class NoteData implements Comparable<NoteData> {//only compares start tim
 			mod = (noteVal == 0 ? -1 : 0);			//octave goes down if going down at c
 			newVal = ((noteVal + 12) - 1)%12;
 		}
-		setNoteVals(noteValType.getVal(newVal),octave+mod, amplitude);		//mod 12 because we want 0-11 (avoid rest==12)			
+		setNoteVals(noteValType.getEnumByIndex(newVal),octave+mod, amplitude);		//mod 12 because we want 0-11 (avoid rest==12)			
 	}//
 	
 	//get nValType value and octave of note displaced by dispamt # of half steps (negative for down)

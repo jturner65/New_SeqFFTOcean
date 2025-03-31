@@ -290,7 +290,7 @@ public class mySequencerWindow extends myMusicSimWindow {
 	public void setUIWinVals(int UIidx){
 		switch(UIidx){
 		case guiTrajToDraw 		: { curTrajAraIDX = (int)guiObjs_Numeric[UIidx].getVal(); break;}
-		case noteDfltLen 		: {	defaultNoteLength = noteDurType.getVal((int)guiObjs_Numeric[UIidx].getVal());updateGridXandY(true);break;}
+		case noteDfltLen 		: {	defaultNoteLength = noteDurType.getEnumFromValue((int)guiObjs_Numeric[UIidx].getVal());updateGridXandY(true);break;}
 		case trajRepeats		: { numTrajNoteRpts = (int)guiObjs_Numeric[UIidx].getVal(); break;}
 		}		
 	}//setUIWinVals

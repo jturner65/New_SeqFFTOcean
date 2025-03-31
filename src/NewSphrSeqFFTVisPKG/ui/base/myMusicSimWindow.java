@@ -242,7 +242,7 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 		//msgObj.dispInfoMessage("myMusicSimWindow","Func","key sig idx : " + idx);
 		if((idx >= 0) && (idx < 12)){
 			dispFlags[fltrByKeySig] = true;
-			glblKeySig = new myKeySig(pa, keySigVals.getVal(idx));	
+			glblKeySig = new myKeySig(pa, keySigVals.getEnumFromValue(idx));	
 		}
 		else {	dispFlags[fltrByKeySig] = false; glblKeySig = new myKeySig(pa, keySigVals.CMaj);	msgObj.dispInfoMessage("myMusicSimWindow","Func","glblKeySig not correctly set : " + glblKeySig.toString());}	
 		glblKeyNotesAra = glblKeySig.getKeyNotesAsList();
@@ -289,7 +289,7 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 	public void setLocalKeySigVal(int idx){
 		myKeySig ks;
 		if((idx >= 0) && (idx < 12)){			
-			ks = new myKeySig(pa, keySigVals.getVal(idx));	
+			ks = new myKeySig(pa, keySigVals.getEnumFromValue(idx));	
 		}
 		else {	ks = new myKeySig(pa, keySigVals.CMaj);	
 		msgObj.dispInfoMessage("myMusicSimWindow (" +className+")","setLocalKeySigVal","ks not correctly set @ idx : " + idx + " : " + ks.toString());}	
@@ -369,7 +369,7 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 	 * @return count of -all- booleans to be managed by privFlags
 	 */
 	@Override
-	public final int initAllUIButtons(ArrayList<Object[]> tmpBtnNamesArray) {
+	protected final int initAllUIButtons(ArrayList<Object[]> tmpBtnNamesArray) {
 		
 		
 		return initAllUIButtons(tmpBtnNamesArray);

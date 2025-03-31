@@ -88,7 +88,7 @@ public class myChord extends myNote{
 				if(noteDispAra[i] > 12){noteDispAra[i] -= 12; newNote.n.editNoteVal(newNote.n.name, newNote.n.octave+1);}
 				if(noteDispAra[i] < -12){noteDispAra[i] += 12; newNote.n.editNoteVal(newNote.n.name, newNote.n.octave-1);}
 				indNDisp = newNote.n.getNoteDisp(noteDispAra[i]);
-				newNote.n.editNoteVal(noteValType.getVal(indNDisp[0]), indNDisp[1]);
+				newNote.n.editNoteVal(noteValType.getEnumByIndex(indNDisp[0]), indNDisp[1]);
 			}		
 		
 		} else {
@@ -97,7 +97,7 @@ public class myChord extends myNote{
 				if(noteDispAra[i] > 12){noteDispAra[i] -= 12; newNote.n.editNoteVal(newNote.n.name, newNote.n.octave+1);}
 				if(noteDispAra[i] < -12){noteDispAra[i] += 12; newNote.n.editNoteVal(newNote.n.name, newNote.n.octave-1);}
 				indNDisp = newNote.n.getNoteDisp(noteDispAra[i]);
-				newNote.n.editNoteVal(noteValType.getVal(indNDisp[0]), indNDisp[1]);
+				newNote.n.editNoteVal(noteValType.getEnumByIndex(indNDisp[0]), indNDisp[1]);
 			}		
 		}
 		//this gets rid of existing chord notes and builds new chord
