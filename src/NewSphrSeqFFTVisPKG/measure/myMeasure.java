@@ -155,7 +155,7 @@ public class myMeasure {
 		msrData.setAllVals(staff.getTimeSigAtTime(msrData.stTime), staff.getKeySigsAtTime(msrData.stTime), staff.getClefsAtTime(msrData.stTime), staff.getC4DistForClefsAtTime(msrData.stTime));
 		int measDur = calcEndTime();		//initialize measure to be full of rest
 		notes.clear();
-		myNote tmpRest = new myNote(noteValType.rest, 0, this, this.staff);		
+		myNote tmpRest = new myNote(win, noteValType.rest, 0, this, this.staff);		
 		tmpRest.setVals(msrData.stTime, measDur, false, false, -1);
 		putNoteInAra(0,tmpRest);
 		//staff.addNoteAtNoteTime(tmpRest);

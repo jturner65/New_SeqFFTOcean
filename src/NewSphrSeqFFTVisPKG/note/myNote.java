@@ -23,6 +23,9 @@ import base_UI_Objects.my_procApplet;
 public class myNote {
 	public static int nCnt = 0;
 	public int ID;		
+	
+	protected final myMusicSimWindow win;
+	
 	public float noteC4DispLoc;		//displacement for this note from C4 for display purposes, governed by owning staff
 	public myMeasure meas;		//owning measure
 	public NoteData n;			//all specific note data
@@ -67,8 +70,9 @@ public class myNote {
 	public int sphereRing;	
 	
 	//build note then set duration
-	public myNote(noteValType _name, int _octave, myMeasure _measure, myStaff _owningStaff) {
-		ID = nCnt++;	
+	public myNote(myMusicSimWindow _win, noteValType _name, int _octave, myMeasure _measure, myStaff _owningStaff) {
+		ID = nCnt++;
+		win = _win;
 		meas = _measure;
 		owningStaff = _owningStaff;
 		sphrOwn = null;
@@ -89,8 +93,9 @@ public class myNote {
 		flags[isInStaff] = (owningStaff.getClefsAtTime(n.stTime).isOnStaff(n) == 0);
 	}	
 	//ctor for note data for notes in spherical UI
-	public myNote(float _alphaSt, float _alphaEnd, int _ring, mySphereCntl _sphrOwn){
-		ID = nCnt++;	
+	public myNote(myMusicSimWindow _win,float _alphaSt, float _alphaEnd, int _ring, mySphereCntl _sphrOwn){
+		ID = nCnt++;
+		win = _win;
 		meas = null;	
 		sphrOwn = _sphrOwn;
 		setSphereDims(_alphaSt,  _alphaEnd,  _ring);		
@@ -101,6 +106,7 @@ public class myNote {
 	
 	public myNote(myNote _note){
 		ID = nCnt++;	
+		win = _note.win;
 		meas = _note.meas;
 		owningStaff = _note.owningStaff;
 		sphrOwn = _note.sphrOwn;

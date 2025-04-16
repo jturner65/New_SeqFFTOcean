@@ -24,13 +24,13 @@ public class myChord extends myNote{
 	public TreeMap<String, myNote> cnotes;	//keyed by frequency
 		
 	//note passed is root of chord
-	public myChord(noteValType _name, int _octave, myMeasure _measure, myStaff _stf) {
-		super(_name,_octave,_measure,_stf);
+	public myChord(myMusicSimWindow _win, noteValType _name, int _octave, myMeasure _measure, myStaff _stf) {
+		super(_win,_name,_octave,_measure,_stf);
 		initChord();
 	} 
 	//turn a note into a chord
-	public myChord(float _alphaSt, float _alphaEnd, int _ring, mySphereCntl _sphrOwn){
-		super(_alphaSt, _alphaEnd, _ring, _sphrOwn);
+	public myChord(myMusicSimWindow _win, float _alphaSt, float _alphaEnd, int _ring, mySphereCntl _sphrOwn){
+		super(_win,_alphaSt, _alphaEnd, _ring, _sphrOwn);
 		initChord();
 	}
 	//turn a note into a chord
@@ -84,7 +84,7 @@ public class myChord extends myNote{
 		//
 		if(flags[isFromSphere]){
 			for(int i =1; i<numNotes; ++i){
-				newNote = new myNote(this.sphereDims[1], this.sphereDims[1], this.sphereRing, this.sphrOwn);
+				newNote = new myNote(win, this.sphereDims[1], this.sphereDims[1], this.sphereRing, this.sphrOwn);
 				if(noteDispAra[i] > 12){noteDispAra[i] -= 12; newNote.n.editNoteVal(newNote.n.name, newNote.n.octave+1);}
 				if(noteDispAra[i] < -12){noteDispAra[i] += 12; newNote.n.editNoteVal(newNote.n.name, newNote.n.octave-1);}
 				indNDisp = newNote.n.getNoteDisp(noteDispAra[i]);
