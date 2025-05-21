@@ -22,7 +22,7 @@ public enum keySigVals {
 	
 	private static Map<Integer, keySigVals> map = new HashMap<Integer, keySigVals>(); 
     static { for (keySigVals enumV : keySigVals.values()) { map.put(enumV.ordinal(), enumV);}}
-	public int getVal(){return ordinal();} 	
+	public int getOrdinal() {return ordinal();} 	
 	public static keySigVals getEnumByIndex(int idx){return map.get(idx);}
 	public static keySigVals getEnumFromValue(int value){return map.get(value);}
 	public static int getNumVals(){return map.size();}						//get # of values in enum

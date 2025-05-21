@@ -25,7 +25,7 @@ public enum chordType {
 	None;			//not a predifined chord type
 	private static Map<Integer, chordType> map = new HashMap<Integer, chordType>(); 
 	static { for (chordType enumV : chordType.values()) { map.put(enumV.ordinal(), enumV);}}
-	public int getVal(){return ordinal();}
+	public int getOrdinal() {return ordinal();}
 	public static chordType getEnumByIndex(int idx){return map.get(idx);}
 	public static chordType getEnumFromValue(int idx){return map.get(idx);}
 	public static int getNumVals(){return map.size();}					//get # of values in enum	

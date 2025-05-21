@@ -144,10 +144,10 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 			drums2InstIDX		= 11;
 	public static final int numInstsAvail = 12;	
 
-	public myMusicSimWindow(IRenderInterface _p, GUI_AppManager _AppMgr, String _n, int _flagIdx, int[] fc,  int[] sc, float[] rd, float[] rdClosed, String _winTxt) {
-		super(_p,_AppMgr,_n, _flagIdx, fc, sc,rd, rdClosed,_winTxt);
+	public myMusicSimWindow(IRenderInterface _ri, GUI_AppManager _AppMgr, String _n, int _flagIdx, int[] fc,  int[] sc, float[] rd, float[] rdClosed, String _winTxt) {
+		super(_ri,_AppMgr,_n, _flagIdx, fc, sc,rd, rdClosed,_winTxt);
 
-		pbe = new myPlaybackEngine(pa, this, new int[]{255,0,255,255}, new int[]{0,255,255,255}, new float[]{0,pa.getHeight()});
+		pbe = new myPlaybackEngine(ri, this, new int[]{255,0,255,255}, new int[]{0,255,255,255}, new float[]{0,ri.getHeight()});
 		vsblStLoc = new float[]{0,0};
 		seqVisStTime = new int[] {0,0};
 	}	
@@ -189,7 +189,7 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 //		vsblStLoc = new float[numSubScrInWin];
 //		seqVisStTime = new int[numSubScrInWin];
 		//drawnTrajAra[curDrnTrajScrIDX][curDrnTrajStaffIDX] init 2 and 10
-		tmpDrawnTraj= new DrawnSimpleTraj(pa,this,topOffY,trajFillClrCnst, trajStrkClrCnst, _trajIsFlat, !_trajIsFlat);
+		tmpDrawnTraj= new DrawnSimpleTraj(ri,this,topOffY,trajFillClrCnst, trajStrkClrCnst, _trajIsFlat, !_trajIsFlat);
 		curDrnTrajScrIDX = 0;
 //		for(int i =0;i<numSubScrInWin;++i){//
 //			vsblStLoc[i] = 0;
@@ -225,7 +225,7 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 		drawTrajBoxFillClrs = new int[scoreStaffNames.length][4];
 		for(int i =0; i<scoreStaffNames.length; ++i){	
 			setScoreStaffName(i, _scoreStaffNames[i]);
-			drawTrajBoxFillClrs[i] = pa.getRndClr();
+			drawTrajBoxFillClrs[i] = ri.getRndClr();
 		}	
 		instrs = score.getInstrumentList();
 
@@ -242,9 +242,9 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 		//msgObj.dispInfoMessage("myMusicSimWindow","Func","key sig idx : " + idx);
 		if((idx >= 0) && (idx < 12)){
 			dispFlags[fltrByKeySig] = true;
-			glblKeySig = new myKeySig(pa, keySigVals.getEnumFromValue(idx));	
+			glblKeySig = new myKeySig(ri, keySigVals.getEnumFromValue(idx));	
 		}
-		else {	dispFlags[fltrByKeySig] = false; glblKeySig = new myKeySig(pa, keySigVals.CMaj);	msgObj.dispInfoMessage("myMusicSimWindow","Func","glblKeySig not correctly set : " + glblKeySig.toString());}	
+		else {	dispFlags[fltrByKeySig] = false; glblKeySig = new myKeySig(ri, keySigVals.CMaj);	msgObj.dispInfoMessage("myMusicSimWindow","Func","glblKeySig not correctly set : " + glblKeySig.toString());}	
 		glblKeyNotesAra = glblKeySig.getKeyNotesAsList();
 		
 		setGlobalKeySigValIndiv(idx, pbe.getCurrentTime());	
@@ -253,7 +253,7 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 	public void setGlobalTimeSigVal(int tsnum, int tsdenom, noteDurType _beatNoteType){
 		glblBeatNote = _beatNoteType;
 		//msgObj.dispInfoMessage("myMusicSimWindow","Func","SetCurrentTimeSigVal in myDispWIn : " + tsnum + " / " + tsdenom);
-		glblTimeSig = new myTimeSig(pa, tsnum, tsdenom, glblBeatNote);		
+		glblTimeSig = new myTimeSig(ri, tsnum, tsdenom, glblBeatNote);		
 		setGlobalTimeSigValIndiv(tsnum, tsdenom, _beatNoteType, pbe.getCurrentTime());	
 	}
 	//set time signature at time passed - for score, set it at nearest measure boundary
@@ -289,9 +289,9 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 	public void setLocalKeySigVal(int idx){
 		myKeySig ks;
 		if((idx >= 0) && (idx < 12)){			
-			ks = new myKeySig(pa, keySigVals.getEnumFromValue(idx));	
+			ks = new myKeySig(ri, keySigVals.getEnumFromValue(idx));	
 		}
-		else {	ks = new myKeySig(pa, keySigVals.CMaj);	
+		else {	ks = new myKeySig(ri, keySigVals.CMaj);	
 		msgObj.dispInfoMessage("myMusicSimWindow (" +className+")","setLocalKeySigVal","ks not correctly set @ idx : " + idx + " : " + ks.toString());}	
 		ArrayList<noteValType> keyNotesAra = ks.getKeyNotesAsList();
 		
@@ -299,7 +299,7 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 	}	
 	//set time signature at time passed - for score, set it at nearest measure boundary
 	public void setLocalTimeSigVal(int tsnum, int tsdenom, noteDurType _beatNoteType){
-		//myTimeSig ts = new myTimeSig(pa, tsnum, tsdenom, _beatNoteType);		
+		//myTimeSig ts = new myTimeSig(ri, tsnum, tsdenom, _beatNoteType);		
 		setLocalTimeSigValIndiv(tsnum, tsdenom, _beatNoteType, pbe.getCurrentTime());	
 	}
 	//set time signature at time passed - for score, set it at nearest measure boundary
@@ -308,13 +308,13 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 	}
 	
 	//displays point with a name
-	public void showKeyPt(myPoint a, String s, float rad){	pa.showPtWithText(a,rad, s, new myVector(10,-5,0), IRenderInterface.gui_Cyan, dispFlags[trajPointsAreFlat]);	}	
+	public void showKeyPt(myPoint a, String s, float rad){	ri.showPtWithText(a,rad, s, new myVector(10,-5,0), IRenderInterface.gui_Cyan, dispFlags[trajPointsAreFlat]);	}	
 
 	/**
 	 * Whether or not to clear staff on trajectory draw
 	 * @return
 	 */
-	public boolean clearStaffTrajOnDraw() {return pa.flags[pa.clearStaffNewTraj];}
+	public boolean clearStaffTrajOnDraw() {return ri.flags[ri.clearStaffNewTraj];}
 	
 	/**
 	 * Create a textured sphere of given radius as a PShape, use this for mini-sphere controls
@@ -343,7 +343,7 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 	 * @return
 	 */
 	public PShape buildSphere(PImage _txtr, float _radius, int[] _ambClr, int[] _specClr, int[] _emissiveClr, float _shn) {
-		PShape sh = ((my_procApplet) pa).createShape(PConstants.SPHERE, _radius); 
+		PShape sh = ((my_procApplet) ri).createShape(PConstants.SPHERE, _radius); 
 		sh.setTexture(_txtr);	
 		sh.beginShape(PConstants.SPHERE);
 		sh.noStroke();
@@ -385,7 +385,7 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 
 	
 	public void drawShape(PShape sh) {
-		((my_procApplet) pa).shape(sh);	
+		((my_procApplet) ri).shape(sh);	
 	}
 	
 	//return summed outputs to simulation
@@ -425,7 +425,7 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 	public void playNote(AudioOutput out, float start, float duration, float freq){out.playNote(start,duration,freq);}	
 	public void play(){
 		if((!dispFlags[plays]) ||(!dispFlags[showIDX])){return;}	//if this doesn't play, or it is not being shown, exit immediately
-//		//msgObj.dispInfoMessage("myMusicSimWindow","Func","ID :" + ID+" play() : startTime : " + pa.glblStartPlayTime + " last play time : " + pa.glblLastPlayTime + " modAmt Sec : " + String.format("%.4f", modAmtSec) + " frate :"+ String.format("%.4f", pa.frameRate));
+//		//msgObj.dispInfoMessage("myMusicSimWindow","Func","ID :" + ID+" play() : startTime : " + ri.glblStartPlayTime + " last play time : " + ri.glblLastPlayTime + " modAmt Sec : " + String.format("%.4f", modAmtSec) + " frate :"+ String.format("%.4f", ri.frameRate));
 //		pbe.play(modAmtSec);
 //		//global play handling - move and draw reticle line		
 		this.dispFlags[myMusicSimWindow.notesLoaded] = false;
@@ -440,7 +440,7 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 			//drawnPRollNotes[i] = new TreeMap<Integer,myNote>();			
 //			instrNoteOut[i].pauseNotes();
 //			instrNoteOut[i].close();
-//			instrNoteOut[i] = pa.getAudioOut();
+//			instrNoteOut[i] = ri.getAudioOut();
 		if(this.ID != 2){
 			glblOut.close();
 			resetAudioOut();			//TODO
@@ -453,7 +453,7 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 	
 	public void movePBEReticle(float modAmtSec){
 		if((!dispFlags[plays]) ||(!dispFlags[showIDX])){return;}	//if this doesn't play, or it is not being shown, exit immediately
-		//msgObj.dispInfoMessage("myMusicSimWindow","Func","ID :" + ID+" play() : startTime : " + pa.glblStartPlayTime + " last play time : " + pa.glblLastPlayTime + " modAmt Sec : " + String.format("%.4f", modAmtSec) + " frate :"+ String.format("%.4f", pa.frameRate));
+		//msgObj.dispInfoMessage("myMusicSimWindow","Func","ID :" + ID+" play() : startTime : " + ri.glblStartPlayTime + " last play time : " + ri.glblLastPlayTime + " modAmt Sec : " + String.format("%.4f", modAmtSec) + " frate :"+ String.format("%.4f", ri.frameRate));
 		if(dispFlags[notesLoaded]){pbe.play(modAmtSec);}
 	}
 

@@ -7,7 +7,7 @@ public enum clefType{
 	Treble, Bass, Alto, Tenor, Piano, Drum; 
 	private static Map<Integer, clefType> map = new HashMap<Integer, clefType>(); 
     static { for (clefType enumV : clefType.values()) { map.put(enumV.ordinal(), enumV);}}
-	public int getVal(){return ordinal();} 	
+	public int getOrdinal() {return ordinal();} 	
 	public static clefType getEnumByIndex(int idx){return map.get(idx);}
 	public static clefType getEnumFromValue(int idx){return map.get(idx);}
 	public static int getNumVals(){return map.size();}						//get # of values in enum

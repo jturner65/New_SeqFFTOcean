@@ -75,8 +75,8 @@ public class myInstEditWindow extends myMusicSimWindow {
 	protected void setupGUIObjsAras(TreeMap<Integer, Object[]> tmpUIObjArray, TreeMap<Integer, String[]> tmpListObjVals){	
 		//msgObj.dispInfoMessage("myInstEditWindow","xxx","setupGUIObjsAras in :"+ name);
 		int numInstrs = 0;
-		if(pa.score!=null){
-			numInstrs = pa.score.staffs.size()-1;
+		if(ri.score!=null){
+			numInstrs = ri.score.staffs.size()-1;
 		} 
 		if(numInstrs < 0){numInstrs = 0;}
 		guiMinMaxModVals = new double [][]{  
@@ -102,9 +102,9 @@ public class myInstEditWindow extends myMusicSimWindow {
 	//if any ui values have a string behind them for display
 	@Override
 	public String getUIListValStr(int UIidx, int validx) {
-		//msgObj.dispInfoMessage("myInstEditWindow","xxx","getUIListValStr : " + UIidx+ " Val : " + validx + " inst len:  "+pa.InstrList.length+ " | "+pa.InstrList[(validx % pa.InstrList.length)].instrName );
-		switch(UIidx){//pa.score.staffs.size()
-			case instToEditIDX 		: {return pa.score.staffs.get(pa.score.staffDispOrder.get(validx % pa.score.staffs.size())).instrument.instrName; }
+		//msgObj.dispInfoMessage("myInstEditWindow","xxx","getUIListValStr : " + UIidx+ " Val : " + validx + " inst len:  "+ri.InstrList.length+ " | "+ri.InstrList[(validx % ri.InstrList.length)].instrName );
+		switch(UIidx){//ri.score.staffs.size()
+			case instToEditIDX 		: {return ri.score.staffs.get(ri.score.staffDispOrder.get(validx % ri.score.staffs.size())).instrument.instrName; }
 		}
 		return "";
 	}
@@ -187,7 +187,7 @@ public class myInstEditWindow extends myMusicSimWindow {
 	}
 	
 	@Override
-	protected myPoint getMouseLoc3D(int mouseX, int mouseY){return pa.P(mouseX,mouseY,0);}
+	protected myPoint getMouseLoc3D(int mouseX, int mouseY){return ri.P(mouseX,mouseY,0);}
 	
 	@Override
 	protected void snapMouseLocs(int oldMouseX, int oldMouseY, int[] newMouseLoc){}//not a snap-to window
