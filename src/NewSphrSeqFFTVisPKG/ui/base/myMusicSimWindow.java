@@ -22,7 +22,7 @@ import base_Math_Objects.MyMathUtils;
 import base_Math_Objects.vectorObjs.doubles.myPoint;
 import base_Math_Objects.vectorObjs.doubles.myVector;
 import base_UI_Objects.GUI_AppManager;
-import base_UI_Objects.my_procApplet;
+import base_UI_Objects.renderer.ProcessingRenderer;
 import base_UI_Objects.windowUI.base.Base_DispWindow;
 import base_UI_Objects.windowUI.drawnTrajectories.DrawnSimpleTraj;
 import ddf.minim.AudioOutput;
@@ -343,7 +343,7 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 	 * @return
 	 */
 	public PShape buildSphere(PImage _txtr, float _radius, int[] _ambClr, int[] _specClr, int[] _emissiveClr, float _shn) {
-		PShape sh = ((my_procApplet) ri).createShape(PConstants.SPHERE, _radius); 
+		PShape sh = ((ProcessingRenderer) ri).createShape(PConstants.SPHERE, _radius); 
 		sh.setTexture(_txtr);	
 		sh.beginShape(PConstants.SPHERE);
 		sh.noStroke();
@@ -385,7 +385,7 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 
 	
 	public void drawShape(PShape sh) {
-		((my_procApplet) ri).shape(sh);	
+		((ProcessingRenderer) ri).shape(sh);	
 	}
 	
 	//return summed outputs to simulation

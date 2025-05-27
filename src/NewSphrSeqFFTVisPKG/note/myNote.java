@@ -13,7 +13,7 @@ import NewSphrSeqFFTVisPKG.ui.controls.mySphereCntl;
 import base_Render_Interface.IRenderInterface;
 import base_Math_Objects.MyMathUtils;
 import base_Math_Objects.vectorObjs.doubles.myVector;
-import base_UI_Objects.my_procApplet;
+import base_UI_Objects.renderer.ProcessingRenderer;
 
 /**
  * fundamental class to hold and process a single note played by a single instrument
@@ -373,7 +373,7 @@ public class myNote {
 		if(restIdx > -1){//draw image
 			p.translate(restDisp[restIdx][0], restDisp[restIdx][1],0);		//center image of rest - move up 2 ledger lines
 			p.scale(1,1.2f,1);
-			((my_procApplet) p).image(win.restImgs[restIdx], 0,0);				
+			((ProcessingRenderer) p).image(win.restImgs[restIdx], 0,0);				
 		} else {//draw box
 			if(restIdx == -2){	p.translate(0,-.5f * restW,0);}//whole rest is above half rest
 			p.drawRect(-.5f * restW, 0, restW,.5f * restW);				

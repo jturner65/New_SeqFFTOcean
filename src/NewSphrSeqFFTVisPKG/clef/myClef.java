@@ -5,7 +5,7 @@ import NewSphrSeqFFTVisPKG.clef.enums.clefType;
 import NewSphrSeqFFTVisPKG.note.NoteData;
 import NewSphrSeqFFTVisPKG.ui.base.myMusicSimWindow;
 import base_Render_Interface.IRenderInterface;
-import base_UI_Objects.my_procApplet;
+import base_UI_Objects.renderer.ProcessingRenderer;
 import processing.core.PImage;
 
 public class myClef extends myClefBase{
@@ -35,7 +35,7 @@ public class myClef extends myClefBase{
 	@Override
 	public void drawMe(IRenderInterface p, float offset) {
 		p.pushMatState();//draw image	
-		((my_procApplet) p).image(clefImage, drawDim[0] + offset,drawDim[1], drawDim[2],drawDim[3]);		
+		((ProcessingRenderer) p).image(clefImage, drawDim[0] + offset,drawDim[1], drawDim[2],drawDim[3]);		
 		p.popMatState();	
 	}
 	
