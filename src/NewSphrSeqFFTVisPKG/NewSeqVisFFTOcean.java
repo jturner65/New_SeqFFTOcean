@@ -2691,18 +2691,6 @@ import ddf.minim.ugens.*;
 		}		
 	}//setcolorValFill
 
-	/**
-	 * any instancing-class-specific colors - colorVal set to be higher than IRenderInterface.gui_OffWhite
-	 * @param colorVal
-	 * @param alpha
-	 * @return
-	 */
-	@Override
-	public int[] getClr_Custom(int colorVal, int alpha) {return getRndClr(alpha); }		
-	@Override
-	public final int[] getRndClr(int alpha){return new int[]{(int)random(0,255),(int)random(0,255),(int)random(0,255),alpha};	}
-	@Override
-	public final int[] getRndClrBright(int alpha){return new int[]{(int)random(50,255),(int)random(25,200),(int)random(80,255),alpha};	}
 	
 	@Override
 	public final int getRndClrIndex(){return (int)random(0,IRenderInterface.gui_nextColorIDX);}		//return a random color flag value from IRenderInterface
