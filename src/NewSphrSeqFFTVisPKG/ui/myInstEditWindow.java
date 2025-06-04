@@ -43,7 +43,7 @@ public class myInstEditWindow extends myMusicSimWindow {
 	 * @return count of -all- booleans to be managed by privFlags
 	 */
 	@Override
-	public final int initAllPrivBtns_Indiv(ArrayList<Object[]> tmpBtnNamesArray) {
+	public final int initAllPrivBtns_Indiv(TreeMap<Integer, Object[]> tmpBtnNamesArray) {
 		
 		
 		return tmpBtnNamesArray.size();
