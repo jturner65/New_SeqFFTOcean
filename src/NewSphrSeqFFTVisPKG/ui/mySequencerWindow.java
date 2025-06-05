@@ -77,7 +77,7 @@ public class mySequencerWindow extends myMusicSimWindow {
 	 * @return count of -all- booleans to be managed by privFlags
 	 */
 	@Override
-	public final int initAllPrivBtns_Indiv(TreeMap<Integer, Object[]> tmpBtnNamesArray) {
+	public final void initAllPrivBtns_Indiv(TreeMap<Integer, Object[]> tmpBtnNamesArray) {
 		
 		
 		return tmpBtnNamesArray.size();
@@ -138,7 +138,23 @@ public class mySequencerWindow extends myMusicSimWindow {
 	public static int calcGridWidth(float winWidth){return (int)(winWidth*gridXMult);}
 	public static int calcGridHeight(float winHeight){return (int)(winHeight*gridYMult);}
 	
-	//initialize structure to hold modifiable UI regions and UI components
+	/**
+	 * Build all UI objects to be shown in left side bar menu for this window.  This is the first child class function called by initThisWin
+	 * @param tmpUIObjArray : map of object data, keyed by UI object idx, with array values being :                    
+	 *           the first element double array of min/max/mod values                                                   
+	 *           the 2nd element is starting value                                                                      
+	 *           the 3rd elem is label for object                                                                       
+	 *           the 4th element is object type (GUIObj_Type enum)
+	 *           the 5th element is boolean array of : (unspecified values default to false)
+	 *           	idx 0: value is sent to owning window,  
+	 *           	idx 1: value is sent on any modifications (while being modified, not just on release), 
+	 *           	idx 2: changes to value must be explicitly sent to consumer (are not automatically sent),
+	 *           the 6th element is a boolean array of format values :(unspecified values default to false)
+	 *           	idx 0: whether multi-line(stacked) or not                                                  
+	 *              idx 1: if true, build prefix ornament                                                      
+	 *              idx 2: if true and prefix ornament is built, make it the same color as the text fill color.
+	 * @param tmpListObjVals : map of string arrays, keyed by UI object idx, with array values being each element in the list
+	 */
 	@Override
 	protected void setupGUIObjsAras(){	//noteVals.length - all UI objects need to be built with respect of putting them in the sidebar menu, dimensions-wise
 		//ri.outStr2Scr("setupGUIObjsAras in :"+ name);

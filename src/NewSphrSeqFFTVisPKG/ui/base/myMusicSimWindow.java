@@ -369,12 +369,12 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 	 * @return count of -all- booleans to be managed by privFlags
 	 */
 	@Override
-	protected final int initAllUIButtons(TreeMap<Integer, Object[]> tmpBtnNamesArray) {
+	protected final void initAllUIButtons(TreeMap<Integer, Object[]> tmpBtnNamesArray) {
 		
 		
 		return initAllUIButtons(tmpBtnNamesArray);
 	}
-	public abstract int initAllPrivBtns_Indiv(TreeMap<Integer, Object[]> tmpBtnNamesArray);
+	public abstract void initAllPrivBtns_Indiv(TreeMap<Integer, Object[]> tmpBtnNamesArray);
 	
 	protected void procInitOut(AudioOutput _out){		//set up so that initial note has no delay
 		_out.pauseNotes();
