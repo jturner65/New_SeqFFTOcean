@@ -641,7 +641,7 @@ public class myOcean implements GLEventListener{
 	private int attachShader(GL2 gl, int type, String shaderSource){
 		int shader = 0; 
 		shader = gl.glCreateShader(type);
-		gl.glShaderSource(shader, 1, new String[] { shaderSource }, null);
+		gl.glShaderSource(shader, 1, new String[]{shaderSource }, null);
 		gl.glCompileShader(shader);
 		int[] buffer = new int[1];
 		gl.glGetShaderiv(shader, GL2.GL_COMPILE_STATUS, IntBuffer.wrap(buffer));
