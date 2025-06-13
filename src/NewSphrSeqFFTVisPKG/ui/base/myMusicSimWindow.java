@@ -365,16 +365,16 @@ public abstract class myMusicSimWindow extends Base_DispWindow {
 	 * Build button descriptive arrays : each object array holds true label, false label, and idx of button in owning child class
 	 * this must return count of -all- booleans managed by privFlags, not just those that are interactive buttons (some may be 
 	 * hidden to manage booleans that manage or record state)
-	 * @param tmpBtnNamesArray ArrayList of Object arrays to be built containing all button definitions. 
+	 * @param tmpUIBtnObjMap ArrayList of Object arrays to be built containing all button definitions. 
 	 * @return count of -all- booleans to be managed by privFlags
 	 */
 	@Override
-	protected final void initAllUIButtons(TreeMap<Integer, Object[]> tmpBtnNamesArray) {
+	protected final void initAllUIButtons(TreeMap<Integer, Object[]> tmpUIBtnObjMap) {
 		
 		
-		return initAllUIButtons(tmpBtnNamesArray);
+		return initAllUIButtons(tmpUIBtnObjMap);
 	}
-	public abstract void initAllPrivBtns_Indiv(TreeMap<Integer, Object[]> tmpBtnNamesArray);
+	public abstract void initAllPrivBtns_Indiv(TreeMap<Integer, Object[]> tmpUIBtnObjMap);
 	
 	protected void procInitOut(AudioOutput _out){		//set up so that initial note has no delay
 		_out.pauseNotes();

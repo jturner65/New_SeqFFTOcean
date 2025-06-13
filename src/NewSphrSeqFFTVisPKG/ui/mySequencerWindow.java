@@ -73,14 +73,14 @@ public class mySequencerWindow extends myMusicSimWindow {
 	 * Build button descriptive arrays : each object array holds true label, false label, and idx of button in owning child class
 	 * this must return count of -all- booleans managed by privFlags, not just those that are interactive buttons (some may be 
 	 * hidden to manage booleans that manage or record state)
-	 * @param tmpBtnNamesArray ArrayList of Object arrays to be built containing all button definitions. 
+	 * @param tmpUIBtnObjMap ArrayList of Object arrays to be built containing all button definitions. 
 	 * @return count of -all- booleans to be managed by privFlags
 	 */
 	@Override
-	public final void initAllPrivBtns_Indiv(TreeMap<Integer, Object[]> tmpBtnNamesArray) {
+	public final void initAllPrivBtns_Indiv(TreeMap<Integer, Object[]> tmpUIBtnObjMap) {
 		
 		
-		return tmpBtnNamesArray.size();
+		return tmpUIBtnObjMap.size();
 	}
 
 	@Override
@@ -140,7 +140,7 @@ public class mySequencerWindow extends myMusicSimWindow {
 	
 	/**
 	 * Build all UI objects to be shown in left side bar menu for this window.  This is the first child class function called by initThisWin
-	 * @param tmpUIObjArray : map of object data, keyed by UI object idx, with array values being :                    
+	 * @param tmpUIObjMap : map of object data, keyed by UI object idx, with array values being :                    
 	 *           the first element double array of min/max/mod values                                                   
 	 *           the 2nd element is starting value                                                                      
 	 *           the 3rd elem is label for object                                                                       
